@@ -115,7 +115,6 @@ export default function Integrations() {
           opacity: hoveredColumn && !isActive ? 0.45 : 1,
           filter: hoveredColumn && !isActive ? "blur(1.5px)" : "blur(0px)",
         }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
         className="relative">
         {/* Gradient border */}
         <motion.div
