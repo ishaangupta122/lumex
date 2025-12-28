@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { FadeIn, ScaleIn } from "./animations/AnimationWrappers";
+import { FadeIn } from "../components/animations/AnimationWrappers";
 import { useRef, useState, useEffect } from "react";
+import CubeGridBackground from "../components/CubeGridBackground";
 
 function AnimatedCounter({
   value,
@@ -46,59 +47,48 @@ function AnimatedCounter({
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-neon-purple/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-neon-green/10 rounded-full blur-3xl" />
-      </div>
+    <section
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
+      data-splash-cursor="true">
+      {/* Interactive Cube Grid Background */}
+      <CubeGridBackground />
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center py-40">
         {/* Badge */}
         <FadeIn delay={0.1}>
           <div className="mb-8 inline-block">
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-medium-gray/50 border border-light-gray backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-medium-gray/50 border border-neon-green backdrop-blur-sm">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-green opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-neon-green"></span>
               </span>
-              <span className="text-sm text-gray-400">Introducing Lumex</span>
+              <span className="text-sm text-neon-green">Introducing Lumex</span>
             </div>
           </div>
         </FadeIn>
 
         {/* Main Heading */}
         <FadeIn delay={0.2}>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-16 leading-tighter">
             Design tools that
             <br />
             <span className="gradient-text">don't slow you down</span>
           </h1>
         </FadeIn>
 
-        {/* Subheading */}
-        <FadeIn delay={0.3}>
-          <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Experience powerful features with an intuitive interface that keeps
-            you in your creative flow.
-          </p>
-        </FadeIn>
-
         {/* CTA Buttons */}
         <FadeIn delay={0.4}>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <motion.button
-              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 bg-neon-green text-black font-semibold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-neon-green/20">
+              className="px-8 py-4 cursor-pointer bg-neon-green text-black font-semibold rounded-full hover:shadow-lg hover:shadow-neon-green/20 transition-all">
               Get Started Free
             </motion.button>
 
             <motion.button
-              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 bg-transparent border-2 border-gray-700 text-white font-semibold rounded-full transition-all duration-300 hover:border-gray-500">
+              className="px-8 py-4 cursor-pointer bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-black transition-all">
               Watch Demo
             </motion.button>
           </div>
@@ -106,7 +96,7 @@ export default function Hero() {
 
         {/* Stats */}
         <FadeIn delay={0.5}>
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
+          <div className="mt-34 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
             {[
               { value: "10", suffix: "M+", label: "Active Users" },
               { value: "99.9", suffix: "%", label: "Uptime" },

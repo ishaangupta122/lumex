@@ -1,41 +1,13 @@
 "use client";
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { FadeIn, SlideIn } from "./animations/AnimationWrappers";
+import { FadeIn, SlideIn } from "../components/animations/AnimationWrappers";
 import { useState, useRef } from "react";
 import { FaQuoteLeft } from "react-icons/fa";
-
-const testimonials = [
-  {
-    name: "Sarah Chen",
-    role: "Product Designer",
-    company: "Stripe",
-    content:
-      "Lumex completely transformed how our team collaborates. The real-time features are incredible.",
-    avatar: "SC",
-    rating: 5,
-  },
-  {
-    name: "Michael Torres",
-    role: "Creative Director",
-    company: "Netflix",
-    content:
-      "Best design tool I've used in 10 years. Fast, intuitive, and powerful.",
-    avatar: "MT",
-    rating: 5,
-  },
-  {
-    name: "Emily Johnson",
-    role: "UX Lead",
-    company: "Airbnb",
-    content:
-      "The keyboard shortcuts alone save me hours every week. This is the future of design.",
-    avatar: "EJ",
-    rating: 5,
-  },
-];
+import { testimonialsData } from "../lib/data";
 
 export default function Testimonials() {
+  const { heading, subheading, testimonials } = testimonialsData;
   const [globalMousePos, setGlobalMousePos] = useState({ x: 0, y: 0 });
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [intensities, setIntensities] = useState<number[]>([0, 0, 0]);
@@ -52,7 +24,7 @@ export default function Testimonials() {
               Loved by <span className="gradient-text">designers</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              See what creative professionals are saying about Lumex
+              {subheading}
             </p>
           </div>
         </FadeIn>
@@ -174,7 +146,7 @@ export default function Testimonials() {
 
                     {/* Author info */}
                     <div className="flex items-center gap-4 pt-6 border-t border-light-gray/30 mt-auto">
-                      <div className="w-14 h-14 rounded-full bg-linear-to-br from-neon-green to-neon-purple flex items-center justify-center font-bold text-black text-lg shadow-lg shadow-neon-green/20">
+                      <div className="w-14 h-14 rounded-full bg-neon-green/20 border border-neon-green  flex items-center justify-center font-bold text-neon-green text-lg">
                         {testimonial.avatar}
                       </div>
                       <div>

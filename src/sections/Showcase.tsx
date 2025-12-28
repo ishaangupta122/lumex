@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { FadeIn } from "./animations/AnimationWrappers";
+import { FadeIn } from "../components/animations/AnimationWrappers";
 import { useRef, useState, useEffect } from "react";
+import { showcaseData } from "../lib/data";
 
 function AnimatedCounter({
   value,
@@ -45,29 +46,7 @@ function AnimatedCounter({
 }
 
 export default function Showcase() {
-  const showcaseItems = [
-    {
-      value: "10M+",
-      label: "Active Creators",
-      description: "Designers and teams worldwide",
-      gradient: "from-purple-500 to-pink-500",
-      icon: "👥",
-    },
-    {
-      value: "99.9%",
-      label: "Uptime SLA",
-      description: "Always available when you need it",
-      gradient: "from-green-400 to-emerald-500",
-      icon: "⚡",
-    },
-    {
-      value: "5000+",
-      label: "Companies",
-      description: "From startups to enterprises",
-      gradient: "from-blue-500 to-cyan-500",
-      icon: "🏢",
-    },
-  ];
+  const { badge, heading, subheading, items: showcaseItems } = showcaseData;
 
   return (
     <section className="relative py-32 md:py-40 px-6 bg-linear-to-b from-black via-dark-gray/30 to-black">
@@ -92,7 +71,7 @@ export default function Showcase() {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-neon-green/30 bg-neon-green/5 mb-8">
               <span className="text-xs md:text-sm font-mono text-neon-green tracking-wider">
-                ★ TRUSTED WORLDWIDE
+                {badge.text}
               </span>
             </motion.div>
             <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
@@ -100,8 +79,7 @@ export default function Showcase() {
               <span className="gradient-text">creative revolution</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Thousands of creators worldwide trust us with their design
-              workflow.
+              {subheading}
             </p>
           </div>
         </FadeIn>
@@ -133,7 +111,7 @@ export default function Showcase() {
                   <div
                     className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                     style={{
-                      background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(196, 255, 97, 0.15), transparent 40%)`,
+                      background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(196, 255, 97, 0.04), transparent 40%)`,
                     }}
                   />
 

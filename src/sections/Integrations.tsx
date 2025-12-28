@@ -1,8 +1,8 @@
 "use client";
 
+import { FadeIn } from "@/components/animations/AnimationWrappers";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
-import { FadeIn } from "./animations/AnimationWrappers";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const CARD_HEIGHT = 200;
 const SPEED = 40; // px per second
@@ -67,7 +67,6 @@ export default function Integrations() {
   const loopHeightLeft = integrationsLeft.length * CARD_HEIGHT;
   const loopHeightRight = integrationsRight.length * CARD_HEIGHT;
 
-  // 🔁 Manual animation loop (pause & resume safe)
   useAnimationFrame((_, delta) => {
     if (isPaused) return;
 
@@ -102,7 +101,7 @@ export default function Integrations() {
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: (index % total) * 0.1 }}
+        transition={{ duration: 0.4, delay: 0 }}
         onMouseEnter={() => {
           setHoveredIndex(index % total);
           setHoveredColumn(column);

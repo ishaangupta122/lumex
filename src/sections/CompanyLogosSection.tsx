@@ -1,33 +1,20 @@
 "use client";
 
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
-import { FadeIn } from "./animations/AnimationWrappers";
+import { FadeIn } from "../components/animations/AnimationWrappers";
 import { useRef, useState } from "react";
+import { companyLogosData } from "../lib/data";
 
-const companies = [
-  { name: "Outside", logo: "🏔️" },
-  { name: "APEX", logo: "✦" },
-  { name: "Celestial", logo: "✧" },
-  { name: "2TWICE", logo: "◆" },
-  { name: "Quantum", logo: "⬢" },
-  { name: "Stellar", logo: "★" },
-  { name: "Nexus", logo: "◈" },
-  { name: "Zenith", logo: "◊" },
-];
-
-export default function CompanyLogos() {
+export default function CompanyLogosSection() {
+  const { companies, config } = companyLogosData;
   const x = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  // px per second
-  const baseSpeed = 80;
-  const slowSpeed = 30;
-
   useAnimationFrame((t, delta) => {
     if (!containerRef.current) return;
 
-    const speed = isHovered ? slowSpeed : baseSpeed;
+    const speed = isHovered ? config.slowSpeed : config.baseSpeed;
     const moveBy = (speed * delta) / 1000;
 
     x.set(x.get() - moveBy);
@@ -41,7 +28,7 @@ export default function CompanyLogos() {
   const duplicatedCompanies = [...companies, ...companies];
 
   return (
-    <section className="relative py-20 px-6 bg-black overflow-hidden border-y border-light-gray/20">
+    <section className="relative py-20 px-6 overflow-hidden border-y border-light-gray/20">
       <FadeIn>
         <div className="max-w-7xl mx-auto">
           <motion.h3
@@ -49,7 +36,7 @@ export default function CompanyLogos() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center text-xl md:text-2xl text-gray-400 mb-16">
-            Already chosen by these market leaders
+            {config.heading}
           </motion.h3>
 
           <div className="relative">
@@ -67,9 +54,9 @@ export default function CompanyLogos() {
                 {duplicatedCompanies.map((company, index) => (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    // initial={{ opacity: 0, y: 20 }}
+                    // whileInView={{ opacity: 1, y: 0 }}
+                    // viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.05 }}
                     className="flex items-center gap-3 cursor-pointer text-white/50 hover:text-white transition">
                     <span className="text-5xl">{company.logo}</span>

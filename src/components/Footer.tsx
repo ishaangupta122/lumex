@@ -4,36 +4,17 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { HiMail, HiLocationMarker } from "react-icons/hi";
 import { FaTwitter, FaGithub, FaLinkedin, FaDribbble } from "react-icons/fa";
+import { footerData } from "../lib/data";
 
-const footerLinks = {
-  product: [
-    { name: "Features", href: "#features" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "Security", href: "#security" },
-    { name: "Roadmap", href: "#roadmap" },
-  ],
-  company: [
-    { name: "About", href: "#about" },
-    { name: "Blog", href: "#blog" },
-    { name: "Careers", href: "#careers" },
-    { name: "Press", href: "#press" },
-  ],
-  resources: [
-    { name: "Documentation", href: "#docs" },
-    { name: "Help Center", href: "#help" },
-    { name: "Community", href: "#community" },
-    { name: "Contact", href: "#contact" },
-  ],
+const socialIcons: Record<string, any> = {
+  Twitter: FaTwitter,
+  GitHub: FaGithub,
+  LinkedIn: FaLinkedin,
+  Discord: FaDribbble,
 };
 
-const socialLinks = [
-  { icon: FaTwitter, href: "#", label: "Twitter" },
-  { icon: FaGithub, href: "#", label: "GitHub" },
-  { icon: FaLinkedin, href: "#", label: "LinkedIn" },
-  { icon: FaDribbble, href: "#", label: "Dribbble" },
-];
-
 export default function Footer() {
+  const { brand, links, social, copyright } = footerData;
   return (
     <footer className="relative bg-black border-t border-light-gray overflow-hidden">
       {/* Background linear */}
@@ -44,9 +25,9 @@ export default function Footer() {
 
       <div className="relative max-w-7xl mx-auto px-6 py-10">
         {/* Top section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 mb-8 py-4">
           {/* Brand section */}
-          <div className="lg:col-span-2">
+          <div className="col-span-2 md:col-span-4 lg:col-span-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -73,10 +54,7 @@ export default function Footer() {
                 </motion.div>
               </Link>
 
-              <p className="text-gray-400 mb-6 max-w-sm">
-                Empowering creators with cutting-edge design tools and seamless
-                collaboration features.
-              </p>
+              <p className="text-gray-400 mb-6 max-w-sm">{brand.tagline}</p>
 
               <div className="space-y-3">
                 <div className="flex items-center gap-3 text-gray-400">
@@ -92,31 +70,33 @@ export default function Footer() {
           </div>
 
           {/* Links sections */}
-          {Object.entries(footerLinks).map(([category, links], index) => (
-            <motion.div
-              key={category}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}>
-              <h3 className="text-white font-semibold mb-6 capitalize">
-                {category}
-              </h3>
-              <ul className="space-y-4">
-                {links.map((link) => (
-                  <li key={link.name}>
-                    <motion.a
-                      href={link.href}
-                      className="text-gray-400 hover:text-neon-green transition-colors duration-300"
-                      whileHover={{ x: 5 }}
-                      transition={{ duration: 0.2 }}>
-                      {link.name}
-                    </motion.a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+          {Object.entries(links).map(
+            ([category, section]: [string, any], index) => (
+              <motion.div
+                key={category}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true }}>
+                <h3 className="text-white font-semibold mb-6">
+                  {section.title}
+                </h3>
+                <ul className="space-y-4">
+                  {section.items.map((link: any) => (
+                    <li key={link.label}>
+                      <motion.a
+                        href={link.href}
+                        className="text-gray-400 hover:text-neon-green transition-colors duration-300"
+                        whileHover={{ x: 5 }}
+                        transition={{ duration: 0.2 }}>
+                        {link.label}
+                      </motion.a>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )
+          )}
         </div>
 
         {/* Newsletter section */}
@@ -138,14 +118,13 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-6 py-3 bg-medium-gray border border-light-gray rounded-full text-white placeholder-gray-500 focus:outline-none focus:border-neon-green transition-colors"
+                className="flex-1 px-6 py-3 bg-medium-gray border border-light-gray rounded-full text-white placeholder-gray-500 focus:outline-none focus:placeholder:text-neon-green focus:border-neon-green transition-colors"
               />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
+              <motion.a
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-3 bg-neon-green text-black font-semibold rounded-full hover:shadow-lg hover:shadow-neon-green/20 transition-all duration-300">
+                className="px-8 py-3 cursor-pointer bg-neon-green text-black font-semibold rounded-full hover:shadow-lg hover:shadow-neon-green/20 transition-all duration-300">
                 Subscribe
-              </motion.button>
+              </motion.a>
             </div>
           </div>
         </motion.div>
@@ -157,23 +136,24 @@ export default function Footer() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
           className="pt-8 border-t border-light-gray flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-gray-400 text-sm">
-            © 2025 Lumex. All rights reserved.
-          </p>
+          <p className="text-gray-400 text-sm">{copyright}</p>
 
           {/* Social links */}
           <div className="flex items-center gap-4">
-            {socialLinks.map((social) => (
-              <motion.a
-                key={social.label}
-                href={social.href}
-                aria-label={social.label}
-                className="w-10 h-10 rounded-full bg-medium-gray border border-light-gray flex items-center justify-center text-gray-400 hover:text-neon-green hover:border-neon-green transition-all duration-300"
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                whileTap={{ scale: 0.9 }}>
-                <social.icon className="w-5 h-5" />
-              </motion.a>
-            ))}
+            {social.map((item: any) => {
+              const Icon = socialIcons[item.name] || FaDribbble;
+              return (
+                <motion.a
+                  key={item.name}
+                  href={item.href}
+                  aria-label={item.name}
+                  className="w-10 h-10 rounded-full bg-medium-gray border border-light-gray flex items-center justify-center text-gray-400 hover:text-neon-green hover:border-neon-green transition-all duration-300"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  whileTap={{ scale: 0.9 }}>
+                  <Icon className="w-5 h-5" />
+                </motion.a>
+              );
+            })}
           </div>
 
           <div className="flex items-center gap-6 text-sm text-gray-400">

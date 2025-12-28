@@ -4,40 +4,27 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState(() => {
-    // Initialize with center of viewport or stored position
-    if (typeof window !== "undefined") {
-      const stored = sessionStorage.getItem("cursorPosition");
-      if (stored) {
-        return JSON.parse(stored);
-      }
-      return {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-      };
-    }
-    return { x: 0, y: 0 };
-  });
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isPointer, setIsPointer] = useState(false);
-  const [isVisible, setIsVisible] = useState(() => {
-    // Check if we have a stored position (meaning cursor was in viewport before)
-    if (typeof window !== "undefined") {
-      return sessionStorage.getItem("cursorPosition") !== null;
-    }
-    return false;
-  });
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     // Check if device has a cursor (not touch-only)
     const hasPointer = window.matchMedia("(pointer: fine)").matches;
+    let hideTimeout: NodeJS.Timeout;
 
     const handleMouseMove = (e: MouseEvent) => {
       const newPosition = { x: e.clientX, y: e.clientY };
       setMousePosition(newPosition);
       setIsVisible(true);
 
-      // Store position in sessionStorage for page refresh
-      sessionStorage.setItem("cursorPosition", JSON.stringify(newPosition));
+      // Clear any existing timeout
+      clearTimeout(hideTimeout);
+
+      // Hide cursor after 2 seconds of inactivity
+      hideTimeout = setTimeout(() => {
+        setIsVisible(false);
+      }, 2000);
 
       const target = e.target as HTMLElement;
       setIsPointer(
@@ -55,16 +42,13 @@ export default function CustomCursor() {
 
     const handleMouseLeave = () => {
       // Hide cursor when it leaves viewport
+      clearTimeout(hideTimeout);
       setIsVisible(false);
     };
 
-    // If device doesn't have cursor, show centered cursor
+    // If device doesn't have cursor (touch), don't show custom cursor
     if (!hasPointer) {
-      setMousePosition({
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-      });
-      setIsVisible(true);
+      setIsVisible(false);
     }
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -72,6 +56,7 @@ export default function CustomCursor() {
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
+      clearTimeout(hideTimeout);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseenter", handleMouseEnter);
       document.removeEventListener("mouseleave", handleMouseLeave);

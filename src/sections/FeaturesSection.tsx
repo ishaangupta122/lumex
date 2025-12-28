@@ -1,35 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FadeIn } from "./animations/AnimationWrappers";
-import { HiSparkles, HiLightningBolt, HiCursorClick } from "react-icons/hi";
+import { FadeIn } from "../components/animations/AnimationWrappers";
 import { useRef, useState, useEffect } from "react";
+import { featuresData } from "../lib/data";
 
-const features = [
-  {
-    icon: HiSparkles,
-    title: "Real-time Collaboration",
-    description: "Work seamlessly with your team. See changes as they happen.",
-    color: "from-purple-500/20 to-pink-500/20",
-    iconBg: "bg-purple-500/10",
-  },
-  {
-    icon: HiLightningBolt,
-    title: "Lightning Fast",
-    description: "Optimized performance that keeps up with your creativity.",
-    color: "from-yellow-500/20 to-orange-500/20",
-    iconBg: "bg-yellow-500/10",
-  },
-  {
-    icon: HiCursorClick,
-    title: "Intuitive Interface",
-    description: "Everything you need, nothing you don't. Simple and powerful.",
-    color: "from-green-500/20 to-emerald-500/20",
-    iconBg: "bg-green-500/10",
-  },
-];
-
-export default function Features() {
+export default function FeaturesSection() {
+  const { heading, subheading, features } = featuresData;
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -72,10 +49,11 @@ export default function Features() {
         <FadeIn>
           <div className="text-center mb-20 md:mb-28">
             <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Built for <span className="gradient-text">modern creators</span>
+              {heading.split("modern creators")[0]}
+              <span className="gradient-text">modern creators</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Everything you need to design, prototype, and collaborate.
+              {subheading}
             </p>
           </div>
         </FadeIn>
@@ -138,7 +116,10 @@ export default function Features() {
                   </p>
 
                   {/* Decorative corner element */}
-                  <div className="absolute top-6 right-6 w-2 h-2 rounded-full bg-neon-green/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <span className="absolute top-8 right-8 flex items-center justify-center">
+                    <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-neon-green opacity-75"></span>
+                    <span className="relative inset-0 inline-flex rounded-full h-2 w-2 bg-neon-green"></span>
+                  </span>
                 </div>
               </motion.div>
             </FadeIn>

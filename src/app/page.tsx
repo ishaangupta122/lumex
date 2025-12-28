@@ -1,21 +1,18 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import Hero from "../components/Hero";
-import Features from "../components/Features";
-import Showcase from "../components/Showcase";
-import Testimonials from "../components/Testimonials";
-import Pricing from "../components/Pricing";
-import CTA from "../components/CTA";
+import Hero from "../sections/Hero";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import CompanyLogos from "../components/CompanyLogos";
-import Integrations from "../components/Integrations";
+import Integrations from "../sections/Integrations";
+import CustomCursor from "@/components/animations/CustomCursor";
 
-// Load CustomCursor only on client side to avoid hydration mismatch
-const CustomCursor = dynamic(() => import("../components/CustomCursor"), {
-  ssr: false,
-});
+// Import refactored sections
+import CompanyLogosSection from "../sections/CompanyLogosSection";
+import FeaturesSection from "../sections/FeaturesSection";
+import PricingSection from "../sections/PricingSection";
+import CTASection from "../sections/CTASection";
+import Showcase from "@/sections/Showcase";
+import Testimonials from "@/sections/Testimonials";
 
 export default function Home() {
   return (
@@ -24,13 +21,13 @@ export default function Home() {
       <Navbar />
       <main className="relative">
         <Hero />
-        <CompanyLogos />
-        <Features />
+        <CompanyLogosSection />
+        <FeaturesSection />
         <Showcase />
         <Integrations />
         <Testimonials />
-        <Pricing />
-        <CTA />
+        <PricingSection />
+        <CTASection />
       </main>
       <Footer />
     </>
