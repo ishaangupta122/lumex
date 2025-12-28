@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { FadeIn, SlideIn } from "../components/animations/AnimationWrappers";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaQuoteLeft } from "react-icons/fa";
 import { testimonialsData } from "../lib/data";
 
@@ -12,11 +12,20 @@ export default function Testimonials() {
   const [globalMousePos, setGlobalMousePos] = useState({ x: 0, y: 0 });
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [intensities, setIntensities] = useState<number[]>([0, 0, 0]);
+  const [isHoverDevice, setIsHoverDevice] = useState(true);
+  const animationFrameRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const canHover =
+      window.matchMedia("(hover: hover)").matches &&
+      window.matchMedia("(pointer: fine)").matches;
+    setIsHoverDevice(canHover);
+  }, []);
 
   return (
     <section className="relative py-32 md:py-40">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-linear-to-b via-10% from-neon-purple/5 via-neon-purple/10 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b via-10% from-transparent via-neon-purple/10 to-transparent md:via-15% md:from-neon-purple/5 md:via-neon-purple/10 md:to-transparent" />
 
       <div className="relative max-w-6xl mx-auto px-6">
         <FadeIn>
@@ -34,31 +43,37 @@ export default function Testimonials() {
         <div
           className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
           onMouseMove={(e) => {
-            setGlobalMousePos({ x: e.clientX, y: e.clientY });
+            if (!isHoverDevice) return;
+            if (animationFrameRef.current !== null) return;
 
-            const newIntensities = [...intensities];
-            cardRefs.current.forEach((cardRef, idx) => {
-              if (cardRef) {
-                const rect = cardRef.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                const distance = Math.sqrt(
-                  Math.pow(e.clientX - centerX, 2) +
-                    Math.pow(e.clientY - centerY, 2)
-                );
+            animationFrameRef.current = requestAnimationFrame(() => {
+              setGlobalMousePos({ x: e.clientX, y: e.clientY });
 
-                const maxDistance = 400;
-                const intensity = Math.max(0, 1 - distance / maxDistance);
-                newIntensities[idx] = intensity;
+              const newIntensities = [...intensities];
+              cardRefs.current.forEach((cardRef, idx) => {
+                if (cardRef) {
+                  const rect = cardRef.getBoundingClientRect();
+                  const centerX = rect.left + rect.width / 2;
+                  const centerY = rect.top + rect.height / 2;
+                  const distance = Math.sqrt(
+                    Math.pow(e.clientX - centerX, 2) +
+                      Math.pow(e.clientY - centerY, 2)
+                  );
 
-                const mouseX = e.clientX - rect.left;
-                const mouseY = e.clientY - rect.top;
+                  const maxDistance = 400;
+                  const intensity = Math.max(0, 1 - distance / maxDistance);
+                  newIntensities[idx] = intensity;
 
-                cardRef.style.setProperty("--mouse-x", `${mouseX}px`);
-                cardRef.style.setProperty("--mouse-y", `${mouseY}px`);
-              }
+                  const mouseX = e.clientX - rect.left;
+                  const mouseY = e.clientY - rect.top;
+
+                  cardRef.style.setProperty("--mouse-x", `${mouseX}px`);
+                  cardRef.style.setProperty("--mouse-y", `${mouseY}px`);
+                }
+              });
+              setIntensities(newIntensities);
+              animationFrameRef.current = null;
             });
-            setIntensities(newIntensities);
           }}
           onMouseLeave={() => {
             setIntensities([0, 0, 0]);
@@ -68,12 +83,12 @@ export default function Testimonials() {
             const rotateY = useMotionValue(0);
 
             const springRotateX = useSpring(rotateX, {
-              stiffness: 150,
-              damping: 15,
+              stiffness: 100,
+              damping: 20,
             });
             const springRotateY = useSpring(rotateY, {
-              stiffness: 150,
-              damping: 15,
+              stiffness: 100,
+              damping: 20,
             });
 
             return (
@@ -93,6 +108,7 @@ export default function Testimonials() {
                     perspective: 1000,
                   }}
                   onMouseMove={(e) => {
+                    if (!isHoverDevice) return;
                     const rect = e.currentTarget.getBoundingClientRect();
                     const centerX = rect.left + rect.width / 2;
                     const centerY = rect.top + rect.height / 2;
@@ -120,13 +136,15 @@ export default function Testimonials() {
                   {/* Card with fixed height */}
                   <div className="relative h-full p-10 md:p-12 rounded-3xl bg-dark-gray/60 border-2 border-light-gray/50 backdrop-blur-sm transition-all duration-500 flex flex-col overflow-hidden z-0">
                     {/* Hover border effect */}
-                    <div
-                      className="absolute inset-0 rounded-3xl pointer-events-none transition-opacity duration-300"
-                      style={{
-                        opacity: intensities[index],
-                        background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(196, 255, 97, 0.15), transparent 40%)`,
-                      }}
-                    />
+                    {isHoverDevice && (
+                      <div
+                        className="absolute inset-0 rounded-3xl pointer-events-none transition-opacity duration-300"
+                        style={{
+                          opacity: intensities[index],
+                          background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(196, 255, 97, 0.15), transparent 40%)`,
+                        }}
+                      />
+                    )}
 
                     {/* Stars */}
                     <div className="flex gap-1 mb-6">
@@ -164,12 +182,14 @@ export default function Testimonials() {
                     </div>
 
                     {/* Hover glow effect */}
-                    <div
-                      className="absolute inset-0 rounded-3xl bg-linear-to-br from-neon-green/5 to-neon-purple/5 pointer-events-none transition-opacity duration-500"
-                      style={{
-                        opacity: intensities[index],
-                      }}
-                    />
+                    {isHoverDevice && (
+                      <div
+                        className="absolute inset-0 rounded-3xl bg-linear-to-br from-neon-green/5 to-neon-purple/5 pointer-events-none transition-opacity duration-500"
+                        style={{
+                          opacity: intensities[index],
+                        }}
+                      />
+                    )}
                   </div>
                 </motion.div>
               </SlideIn>

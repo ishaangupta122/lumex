@@ -74,6 +74,14 @@ export default function Integrations() {
           setHoveredIndex(null);
           setHoveredColumn(null);
         }}
+        onTouchStart={() => {
+          setHoveredIndex(index % total);
+          setHoveredColumn(column);
+        }}
+        onTouchEnd={() => {
+          setHoveredIndex(null);
+          setHoveredColumn(null);
+        }}
         animate={{
           opacity: hoveredColumn && !isActive ? 0.45 : 1,
           filter: hoveredColumn && !isActive ? "blur(1.5px)" : "blur(0px)",

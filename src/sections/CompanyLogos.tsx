@@ -49,7 +49,9 @@ export default function CompanyLogos() {
                 style={{ x }}
                 className="flex gap-24 w-max"
                 onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}>
+                onMouseLeave={() => setIsHovered(false)}
+                onTouchStart={() => setIsHovered(true)}
+                onTouchEnd={() => setIsHovered(false)}>
                 {duplicatedCompanies.map((company, index) => (
                   <motion.div
                     key={index}

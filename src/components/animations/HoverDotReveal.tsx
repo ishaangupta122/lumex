@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 export default function HoverDotReveal({
@@ -13,39 +13,57 @@ export default function HoverDotReveal({
   const containerRef = useRef<HTMLDivElement>(null);
   const coreRef = useRef<HTMLDivElement>(null);
   const haloRef = useRef<HTMLDivElement>(null);
+  const [isHoverDevice, setIsHoverDevice] = useState(true);
+
+  useEffect(() => {
+    const canHover =
+      window.matchMedia("(hover: hover)").matches &&
+      window.matchMedia("(pointer: fine)").matches;
+    setIsHoverDevice(canHover);
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
     const core = coreRef.current;
     const halo = haloRef.current;
 
-    if (!container || !core || !halo) return;
+    if (!container || !core || !halo || !isHoverDevice) return;
+
+    let animationFrameId: number | null = null;
 
     const onMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      if (animationFrameId !== null) return;
 
-      // INNER CORE (strong)
-      gsap.to(core, {
-        maskPosition: `${x - radius * 0.4}px ${y - radius * 0.4}px`,
-        WebkitMaskPosition: `${x - radius * 0.4}px ${y - radius * 0.4}px`,
-        maskSize: `${radius * 0.8}px ${radius * 0.8}px`,
-        WebkitMaskSize: `${radius * 0.8}px ${radius * 0.8}px`,
-        opacity: 0.45,
-        duration: 0.25,
-        ease: "power3.out",
-      });
+      animationFrameId = requestAnimationFrame(() => {
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-      // OUTER HALO (soft)
-      gsap.to(halo, {
-        maskPosition: `${x - radius}px ${y - radius}px`,
-        WebkitMaskPosition: `${x - radius}px ${y - radius}px`,
-        maskSize: `${radius * 2}px ${radius * 2}px`,
-        WebkitMaskSize: `${radius * 2}px ${radius * 2}px`,
-        opacity: 0.25,
-        duration: 0.4,
-        ease: "power3.out",
+        // INNER CORE (strong)
+        gsap.to(core, {
+          maskPosition: `${x - radius * 0.4}px ${y - radius * 0.4}px`,
+          WebkitMaskPosition: `${x - radius * 0.4}px ${y - radius * 0.4}px`,
+          maskSize: `${radius * 0.8}px ${radius * 0.8}px`,
+          WebkitMaskSize: `${radius * 0.8}px ${radius * 0.8}px`,
+          opacity: 0.45,
+          duration: 0.15,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+
+        // OUTER HALO (soft)
+        gsap.to(halo, {
+          maskPosition: `${x - radius}px ${y - radius}px`,
+          WebkitMaskPosition: `${x - radius}px ${y - radius}px`,
+          maskSize: `${radius * 2}px ${radius * 2}px`,
+          WebkitMaskSize: `${radius * 2}px ${radius * 2}px`,
+          opacity: 0.25,
+          duration: 0.2,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+
+        animationFrameId = null;
       });
     };
 
@@ -54,19 +72,23 @@ export default function HoverDotReveal({
         maskSize: "0px 0px",
         WebkitMaskSize: "0px 0px",
         opacity: 0,
-        duration: 0.4,
-        ease: "power3.out",
+        duration: 0.3,
+        ease: "power2.out",
+        overwrite: "auto",
       });
     };
 
-    container.addEventListener("mousemove", onMove);
+    container.addEventListener("mousemove", onMove, { passive: true });
     container.addEventListener("mouseleave", onLeave);
 
     return () => {
       container.removeEventListener("mousemove", onMove);
       container.removeEventListener("mouseleave", onLeave);
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
     };
-  }, [radius]);
+  }, [radius, isHoverDevice]);
 
   const baseDotStyle = {
     backgroundImage:
@@ -89,30 +111,34 @@ export default function HoverDotReveal({
       <div className="relative z-10">{children}</div>
 
       {/* SOFT HALO */}
-      <div
-        ref={haloRef}
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          ...baseDotStyle,
-          opacity: 0,
-          maskImage: "radial-gradient(circle, black 30%, transparent 75%)",
-          WebkitMaskImage:
-            "radial-gradient(circle, black 30%, transparent 75%)",
-        }}
-      />
+      {isHoverDevice && (
+        <div
+          ref={haloRef}
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            ...baseDotStyle,
+            opacity: 0,
+            maskImage: "radial-gradient(circle, black 30%, transparent 75%)",
+            WebkitMaskImage:
+              "radial-gradient(circle, black 30%, transparent 75%)",
+          }}
+        />
+      )}
 
       {/* STRONG CORE */}
-      <div
-        ref={coreRef}
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          ...baseDotStyle,
-          opacity: 0,
-          maskImage: "radial-gradient(circle, black 60%, transparent 80%)",
-          WebkitMaskImage:
-            "radial-gradient(circle, black 60%, transparent 80%)",
-        }}
-      />
+      {isHoverDevice && (
+        <div
+          ref={coreRef}
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            ...baseDotStyle,
+            opacity: 0,
+            maskImage: "radial-gradient(circle, black 60%, transparent 80%)",
+            WebkitMaskImage:
+              "radial-gradient(circle, black 60%, transparent 80%)",
+          }}
+        />
+      )}
     </div>
   );
 }

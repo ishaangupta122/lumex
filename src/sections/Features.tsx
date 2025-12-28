@@ -9,6 +9,14 @@ export default function Features() {
   const { heading, highlightedHeading, subheading, features } = featuresData;
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isHoverDevice, setIsHoverDevice] = useState(true);
+
+  useEffect(() => {
+    const canHover =
+      window.matchMedia("(hover: hover)").matches &&
+      window.matchMedia("(pointer: fine)").matches;
+    setIsHoverDevice(canHover);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -64,16 +72,17 @@ export default function Features() {
             {features.map((feature, index) => (
               <FadeIn key={index} delay={0} direction="up">
                 <motion.div
-                  initial={{ opacity: 0, rotateY: -15 }}
+                  initial={{ opacity: 0, rotateY: -10 }}
                   whileInView={{ opacity: 1, rotateY: 0 }}
                   viewport={{ once: true }}
                   transition={{
-                    duration: 1.2,
-                    delay: index * 0.3,
+                    duration: 0.8,
+                    delay: index * 0.15,
                     ease: "easeOut",
                   }}
                   className="group relative h-full"
                   onMouseMove={(e) => {
+                    if (!isHoverDevice) return;
                     const rect = e.currentTarget.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
@@ -81,21 +90,24 @@ export default function Features() {
                     e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
                   }}
                   onMouseLeave={(e) => {
+                    if (!isHoverDevice) return;
                     e.currentTarget.style.setProperty("--mouse-x", `50%`);
                     e.currentTarget.style.setProperty("--mouse-y", `50%`);
                   }}>
                   {/* Hover border effect with mouse tracking */}
-                  <div
-                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10"
-                    style={{
-                      background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(196, 255, 97, 0.6), transparent 40%)`,
-                      padding: "2px",
-                      WebkitMask:
-                        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                      WebkitMaskComposite: "xor",
-                      maskComposite: "exclude",
-                    }}
-                  />
+                  {isHoverDevice && (
+                    <div
+                      className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-10"
+                      style={{
+                        background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(196, 255, 97, 0.6), transparent 40%)`,
+                        padding: "2px",
+                        WebkitMask:
+                          "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                        WebkitMaskComposite: "xor",
+                        maskComposite: "exclude",
+                      }}
+                    />
+                  )}
 
                   {/* Card content */}
                   <div className="relative h-full p-10 md:p-12 rounded-3xl bg-dark-gray backdrop-blur-sm transition-all duration-500 flex flex-col justify-between z-0">

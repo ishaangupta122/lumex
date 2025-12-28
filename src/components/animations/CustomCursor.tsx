@@ -7,9 +7,16 @@ export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isPointer, setIsPointer] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const hasPointer = window.matchMedia("(pointer: fine)").matches;
+    const canHover =
+      window.matchMedia("(hover: hover)").matches &&
+      window.matchMedia("(pointer: fine)").matches;
+
+    if (!canHover) return;
+
+    setEnabled(true);
     let hideTimeout: NodeJS.Timeout;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -41,10 +48,6 @@ export default function CustomCursor() {
       setIsVisible(false);
     };
 
-    if (!hasPointer) {
-      setIsVisible(false);
-    }
-
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseenter", handleMouseEnter);
     document.addEventListener("mouseleave", handleMouseLeave);
@@ -56,6 +59,8 @@ export default function CustomCursor() {
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
+
+  if (!enabled) return null;
 
   return (
     <>

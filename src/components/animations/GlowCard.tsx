@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface GlowCardProps {
   children: ReactNode;
@@ -18,7 +18,17 @@ export default function GlowCard({
   onMouseMove,
   onMouseLeave,
 }: GlowCardProps) {
+  const [isHoverDevice, setIsHoverDevice] = useState(true);
+
+  useEffect(() => {
+    const canHover =
+      window.matchMedia("(hover: hover)").matches &&
+      window.matchMedia("(pointer: fine)").matches;
+    setIsHoverDevice(canHover);
+  }, []);
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isHoverDevice) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -28,6 +38,7 @@ export default function GlowCard({
   };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isHoverDevice) return;
     e.currentTarget.style.setProperty("--mouse-x", `50%`);
     e.currentTarget.style.setProperty("--mouse-y", `50%`);
     onMouseLeave?.(e);
@@ -39,17 +50,19 @@ export default function GlowCard({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}>
       {/* Hover border effect with mouse tracking */}
-      <div
-        className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
-        style={{
-          background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${glowColor}, transparent 40%)`,
-          padding: "2px",
-          WebkitMask:
-            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-          WebkitMaskComposite: "xor",
-          maskComposite: "exclude",
-        }}
-      />
+      {isHoverDevice && (
+        <div
+          className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
+          style={{
+            background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${glowColor}, transparent 40%)`,
+            padding: "2px",
+            WebkitMask:
+              "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+            WebkitMaskComposite: "xor",
+            maskComposite: "exclude",
+          }}
+        />
+      )}
       {children}
     </motion.div>
   );

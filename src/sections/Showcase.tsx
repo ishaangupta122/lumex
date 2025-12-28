@@ -53,6 +53,14 @@ export default function Showcase() {
     subheading,
     items: showcaseItems,
   } = showcaseData;
+  const [isHoverDevice, setIsHoverDevice] = useState(true);
+
+  useEffect(() => {
+    const canHover =
+      window.matchMedia("(hover: hover)").matches &&
+      window.matchMedia("(pointer: fine)").matches;
+    setIsHoverDevice(canHover);
+  }, []);
 
   return (
     <section className="relative py-32 md:py-40">
@@ -83,12 +91,13 @@ export default function Showcase() {
           {showcaseItems.map((item, index) => (
             <FadeIn key={index} delay={index * 0.2}>
               <motion.div
-                initial={{ opacity: 0, rotateX: 45 }}
+                initial={{ opacity: 0, rotateX: 30 }}
                 whileInView={{ opacity: 1, rotateX: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="group relative perspective-1000 h-full"
                 onMouseMove={(e) => {
+                  if (!isHoverDevice) return;
                   const rect = e.currentTarget.getBoundingClientRect();
                   const x = e.clientX - rect.left;
                   const y = e.clientY - rect.top;
@@ -96,19 +105,23 @@ export default function Showcase() {
                   e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
                 }}>
                 {/* Glowing background */}
-                <div
-                  className={`absolute inset-0 bg-linear-to-br ${item.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-3xl blur-xl`}
-                />
+                {isHoverDevice && (
+                  <div
+                    className={`absolute inset-0 bg-linear-to-br ${item.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-3xl blur-xl`}
+                  />
+                )}
 
                 {/* Card */}
                 <div className="h-full relative p-8 md:p-10 rounded-3xl bg-dark-gray/80 border-2 border-light-gray/50 backdrop-blur-sm text-center transition-all duration-500 flex flex-col justify-center overflow-hidden">
                   {/* Hover border effect */}
-                  <div
-                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{
-                      background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(196, 255, 97, 0.04), transparent 40%)`,
-                    }}
-                  />
+                  {isHoverDevice && (
+                    <div
+                      className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(196, 255, 97, 0.04), transparent 40%)`,
+                      }}
+                    />
+                  )}
 
                   {/* Icon */}
                   <motion.div

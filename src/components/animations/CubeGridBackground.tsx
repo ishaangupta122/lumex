@@ -63,44 +63,62 @@ function Cube({ row, col, layer, brightness }: CubeProps) {
     const cube = cubeRef.current;
     if (!cube) return;
 
+    // Skip mouse tracking on touch devices for performance
+    const canHover =
+      window.matchMedia("(hover: hover)").matches &&
+      window.matchMedia("(pointer: fine)").matches;
+    if (!canHover) return;
+
     const maxDistance = layer === "foreground" ? 280 : 380;
     const intensityMultiplier = layer === "foreground" ? 1.2 : 0.9;
+    let animationFrameId: number | null = null;
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = cube.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
+      if (animationFrameId !== null) return;
 
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      const influence = Math.max(0, 1 - distance / maxDistance);
+      animationFrameId = requestAnimationFrame(() => {
+        const rect = cube.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
 
-      if (influence > 0) {
-        gsap.to(cube, {
-          rotateX: (-dy / maxDistance) * 18 * influence * intensityMultiplier,
-          rotateY: (dx / maxDistance) * 18 * influence * intensityMultiplier,
-          scale: 1 + influence * 0.06 * intensityMultiplier,
-          opacity: (0.35 + influence * 0.4) * brightness,
-          duration: 0.3,
-          ease: "power2.out",
-          overwrite: true,
-        });
-      } else {
-        gsap.to(cube, {
-          rotateX: 0,
-          rotateY: 0,
-          scale: 1,
-          opacity: 0.35 * brightness,
-          duration: 0.3,
-          ease: "power2.out",
-          overwrite: true,
-        });
-      }
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const influence = Math.max(0, 1 - distance / maxDistance);
+
+        if (influence > 0) {
+          gsap.to(cube, {
+            rotateX: (-dy / maxDistance) * 18 * influence * intensityMultiplier,
+            rotateY: (dx / maxDistance) * 18 * influence * intensityMultiplier,
+            scale: 1 + influence * 0.06 * intensityMultiplier,
+            opacity: (0.35 + influence * 0.4) * brightness,
+            duration: 0.2,
+            ease: "power1.out",
+            overwrite: "auto",
+          });
+        } else {
+          gsap.to(cube, {
+            rotateX: 0,
+            rotateY: 0,
+            scale: 1,
+            opacity: 0.35 * brightness,
+            duration: 0.2,
+            ease: "power1.out",
+            overwrite: "auto",
+          });
+        }
+
+        animationFrameId = null;
+      });
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, [layer, brightness]);
 
   return (
@@ -109,7 +127,6 @@ function Cube({ row, col, layer, brightness }: CubeProps) {
       className="cube-container relative"
       style={{
         transformStyle: "preserve-3d",
-        willChange: "transform",
         opacity: 0.35 * brightness,
       }}>
       <div className="cube-wireframe relative w-full h-full">

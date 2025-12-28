@@ -101,7 +101,7 @@ export default function Hero() {
               <div
                 key={index}
                 className="flex flex-col items-center flex-wrap text-center group">
-                <div className="w-fit text-2xl md:text-3xl font-bold text-white group-hover:text-neon-green mb-1 transition-colors duration-300">
+                <div className="w-fit text-3xl md:text-4xl font-bold text-white group-hover:text-neon-green mb-1 transition-colors duration-300">
                   <>
                     <AnimatedCounter value={stat.value} suffix="" />
                     {stat.suffix}
