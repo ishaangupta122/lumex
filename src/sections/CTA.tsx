@@ -16,12 +16,12 @@ export default function CTASection() {
   } = ctaData;
 
   return (
-    <section className="relative py-32 md:py-40 px-6 bg-black overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-linear-to-b from-neon-purple/5 via-transparent to-neon-green/5" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-neon-green/10 rounded-full blur-3xl" />
-
-      <div className="relative">
+    <section className="relative py-32 md:py-40 bg-black overflow-hidden">
+      <div className="relative max-w-6xl mx-auto px-6">
+        <motion.div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl" />
+        </motion.div>
         <FadeIn>
           <div className="text-center">
             <motion.h2

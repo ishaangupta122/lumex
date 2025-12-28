@@ -50,14 +50,12 @@ export default function Hero() {
   const { badge, heading, buttons, stats } = heroData;
 
   return (
-    <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
-      data-splash-cursor="true">
+    <section className="relative px-6 py-32 md:py-40 min-h-screen flex items-center justify-center overflow-hidden bg-black">
       {/* Interactive Cube Grid Background */}
       <CubeGridBackground />
 
       {/* Content */}
-      <div className="relative z-10 px-6 text-center py-40">
+      <div className="relative z-10 text-center">
         {/* Badge */}
         <FadeIn delay={0.1}>
           <div className="mb-8 inline-block">

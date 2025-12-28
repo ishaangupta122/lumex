@@ -27,16 +27,16 @@ export default function CompanyLogos() {
   const duplicatedCompanies = [...companies, ...companies];
 
   return (
-    <section className="relative py-20 px-6 overflow-hidden border-y border-light-gray/20">
+    <section className="relative py-32 md:py-40 overflow-hidden border-y border-light-gray/20">
       <FadeIn>
-        <div className="relative">
-          <motion.h3
+        <div className="relative max-w-6xl mx-auto px-6">
+          {/* <motion.h3
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="text-center text-xl md:text-2xl text-gray-400 mb-16">
             {config.heading}
-          </motion.h3>
+          </motion.h3> */}
 
           <div className="relative">
             {/* Gradients */}

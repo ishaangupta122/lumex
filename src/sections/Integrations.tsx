@@ -117,31 +117,31 @@ export default function Integrations() {
   };
 
   return (
-    <section className="relative py-32 md:py-40 px-6 bg-black overflow-hidden">
-      <div className="absolute inset-0 bg-linear-to-b from-transparent via-neon-green/5 to-transparent" />
-
-      <div className="relative">
+    <section className="relative py-32 md:py-40 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
           {/* LEFT CONTENT */}
           <FadeIn>
             <div className="lg:sticky lg:top-32">
-              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-neon-green/30 bg-neon-green/5 mb-8">
+              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-neon-green/30 bg-neon-green/5 mb-14 w-fit">
                 <span className="text-xs font-mono text-neon-green tracking-wider">
                   {badge.text}
                 </span>
               </div>
-              <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                {heading}{" "}
-                <span className="gradient-text">{highlightedHeading}</span>
-              </h2>
-              <p className="text-xl md:text-2xl text-gray-400 leading-relaxed">
-                {subheading}
-              </p>
+              <div>
+                <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tighter">
+                  {heading}{" "}
+                  <span className="gradient-text">{highlightedHeading}</span>
+                </h2>
+                <p className="text-xl md:text-2xl text-gray-400 leading-relaxed">
+                  {subheading}
+                </p>
+              </div>
             </div>
           </FadeIn>
 
           {/* RIGHT MARQUEE */}
-          <div className="relative h-150 overflow-hidden rounded-3xl max-w-md ml-auto">
+          <div className="relative h-150 overflow-hidden max-w-md ml-auto">
             <div className="grid grid-cols-2 gap-4 h-full">
               <motion.div className="space-y-4" style={{ y: yLeft }}>
                 {duplicatedLeft.map((i, idx) =>

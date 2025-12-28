@@ -11,22 +11,25 @@ import Pricing from "@/sections/Pricing";
 import CTA from "@/sections/CTA";
 import Showcase from "@/sections/Showcase";
 import Testimonials from "@/sections/Testimonials";
+import HoverDotReveal from "@/components/animations/HoverDotReveal";
 
 export default function Home() {
   return (
     <>
       <CustomCursor />
       <Navbar />
-      <main className="relative max-w-6xl mx-auto">
-        <Hero />
-        <CompanyLogos />
-        <Features />
-        <Showcase />
-        <Integrations />
-        <Testimonials />
-        <Pricing />
-        <CTA />
-      </main>
+      <Hero />
+      <CompanyLogos />
+      <Features />
+      <HoverDotReveal radius={260}>
+        <div className="h-full bg-linear-to-b from-black/70 via-dark-gray/30 to-black/70">
+          <Showcase />
+          <Integrations />
+        </div>
+      </HoverDotReveal>
+      <Testimonials />
+      <Pricing />
+      <CTA />
       <Footer />
     </>
   );

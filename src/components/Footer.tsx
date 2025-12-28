@@ -138,8 +138,8 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="pt-5 border-t border-light-gray w-full">
-          <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+          className="pt-5 px-6 border-t border-light-gray w-full">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-gray-400 text-sm">{copyright}</p>
 
             {/* Social links */}

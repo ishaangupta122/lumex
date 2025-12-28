@@ -14,11 +14,11 @@ export default function Testimonials() {
   const [intensities, setIntensities] = useState<number[]>([0, 0, 0]);
 
   return (
-    <section className="relative py-32 md:py-40 px-6 bg-black overflow-hidden">
+    <section className="relative py-32 md:py-40">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-linear-to-b from-transparent via-neon-purple/5 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-b via-10% from-neon-purple/5 via-neon-purple/10 to-transparent" />
 
-      <div className="relative">
+      <div className="relative max-w-6xl mx-auto px-6">
         <FadeIn>
           <div className="text-center mb-20 md:mb-28">
             <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
@@ -110,8 +110,10 @@ export default function Testimonials() {
                   }}>
                   {/* Quote mark background */}
                   <div
-                    className="absolute -top-2 -left-4 text-neon-green/50 z-10 select-none"
-                    style={{ transform: "scaleX(-1) scaleY(-1)" }}>
+                    className="absolute -top-3 -left-1 text-neon-green/50 z-10 select-none"
+                    style={{
+                      transform: "scaleX(1) scaleY(-1)",
+                    }}>
                     <FaQuoteLeft className="w-10 h-10" />
                   </div>
 

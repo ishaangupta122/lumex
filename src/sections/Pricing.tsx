@@ -13,8 +13,8 @@ export default function Pricing() {
   const { heading, highlightedHeading, subheading, plans } = pricingData;
 
   return (
-    <section className="relative py-32 md:py-40 px-6 bg-black z-20">
-      <div className="relative z-20">
+    <div className="relative py-32 md:py-40 z-20">
+      <div className="max-w-6xl mx-auto px-6">
         <FadeIn>
           <div className="text-center mb-20 md:mb-28">
             <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
@@ -88,6 +88,6 @@ export default function Pricing() {
           </div>
         </StaggerContainer>
       </div>
-    </section>
+    </div>
   );
 }
