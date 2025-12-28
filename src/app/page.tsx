@@ -1,16 +1,14 @@
 "use client";
 
-import Hero from "../sections/Hero";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import Integrations from "../sections/Integrations";
+import Hero from "@/sections/Hero";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Integrations from "@/sections/Integrations";
 import CustomCursor from "@/components/animations/CustomCursor";
-
-// Import refactored sections
-import CompanyLogosSection from "../sections/CompanyLogosSection";
-import FeaturesSection from "../sections/FeaturesSection";
-import PricingSection from "../sections/PricingSection";
-import CTASection from "../sections/CTASection";
+import CompanyLogos from "@/sections/CompanyLogos";
+import Features from "@/sections/Features";
+import Pricing from "@/sections/Pricing";
+import CTA from "@/sections/CTA";
 import Showcase from "@/sections/Showcase";
 import Testimonials from "@/sections/Testimonials";
 
@@ -19,15 +17,15 @@ export default function Home() {
     <>
       <CustomCursor />
       <Navbar />
-      <main className="relative">
+      <main className="relative max-w-6xl mx-auto">
         <Hero />
-        <CompanyLogosSection />
-        <FeaturesSection />
+        <CompanyLogos />
+        <Features />
         <Showcase />
         <Integrations />
         <Testimonials />
-        <PricingSection />
-        <CTASection />
+        <Pricing />
+        <CTA />
       </main>
       <Footer />
     </>

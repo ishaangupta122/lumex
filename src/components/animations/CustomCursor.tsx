@@ -9,7 +9,6 @@ export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Check if device has a cursor (not touch-only)
     const hasPointer = window.matchMedia("(pointer: fine)").matches;
     let hideTimeout: NodeJS.Timeout;
 
@@ -18,10 +17,8 @@ export default function CustomCursor() {
       setMousePosition(newPosition);
       setIsVisible(true);
 
-      // Clear any existing timeout
       clearTimeout(hideTimeout);
 
-      // Hide cursor after 2 seconds of inactivity
       hideTimeout = setTimeout(() => {
         setIsVisible(false);
       }, 2000);
@@ -35,18 +32,15 @@ export default function CustomCursor() {
     };
 
     const handleMouseEnter = (e: MouseEvent) => {
-      // When cursor enters viewport, set position and make visible
       setMousePosition({ x: e.clientX, y: e.clientY });
       setIsVisible(true);
     };
 
     const handleMouseLeave = () => {
-      // Hide cursor when it leaves viewport
       clearTimeout(hideTimeout);
       setIsVisible(false);
     };
 
-    // If device doesn't have cursor (touch), don't show custom cursor
     if (!hasPointer) {
       setIsVisible(false);
     }

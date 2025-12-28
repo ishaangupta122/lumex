@@ -3,61 +3,25 @@
 import { FadeIn } from "@/components/animations/AnimationWrappers";
 import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 import { useState } from "react";
-
-const CARD_HEIGHT = 200;
-const SPEED = 40; // px per second
-
-const integrationsLeft = [
-  {
-    name: "Figma",
-    icon: "🎨",
-    description: "Figma is a collaborative interface design tool.",
-  },
-  {
-    name: "Notion",
-    icon: "📝",
-    description: "Notion is an all-in-one workspace for notes and docs.",
-  },
-  {
-    name: "Slack",
-    icon: "💬",
-    description: "Slack is a powerful team communication platform.",
-  },
-  {
-    name: "GitHub",
-    icon: "🐙",
-    description: "GitHub is the leading platform for code collaboration.",
-  },
-];
-
-const integrationsRight = [
-  {
-    name: "Linear",
-    icon: "📊",
-    description: "Linear is the issue tracking tool teams love to use.",
-  },
-  {
-    name: "Dropbox",
-    icon: "📦",
-    description: "Dropbox keeps your files safe and accessible.",
-  },
-  {
-    name: "Zoom",
-    icon: "🎥",
-    description: "Zoom connects teams with video conferencing.",
-  },
-  {
-    name: "Trello",
-    icon: "📋",
-    description: "Trello organizes your projects into boards.",
-  },
-];
+import { integrationsData } from "@/lib/data";
 
 export default function Integrations() {
+  const {
+    badge,
+    heading,
+    highlightedHeading,
+    subheading,
+    integrationsLeft,
+    integrationsRight,
+  } = integrationsData;
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [hoveredColumn, setHoveredColumn] = useState<"left" | "right" | null>(
     null
   );
+
+  const CARD_HEIGHT = 200;
+  const SPEED = 40;
 
   const yLeft = useMotionValue(0);
   const yRight = useMotionValue(-(integrationsRight.length * CARD_HEIGHT));
@@ -156,22 +120,22 @@ export default function Integrations() {
     <section className="relative py-32 md:py-40 px-6 bg-black overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-neon-green/5 to-transparent" />
 
-      <div className="max-w-7xl mx-auto relative">
+      <div className="relative">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
           {/* LEFT CONTENT */}
           <FadeIn>
             <div className="lg:sticky lg:top-32">
               <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-neon-green/30 bg-neon-green/5 mb-8">
                 <span className="text-xs font-mono text-neon-green tracking-wider">
-                  ✦ INTEGRATIONS
+                  {badge.text}
                 </span>
               </div>
               <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                Plays well with <span className="gradient-text">others</span>
+                {heading}{" "}
+                <span className="gradient-text">{highlightedHeading}</span>
               </h2>
               <p className="text-xl md:text-2xl text-gray-400 leading-relaxed">
-                Layers seamlessly connects with your favorite tools, making it
-                easy to plug into any workflow.
+                {subheading}
               </p>
             </div>
           </FadeIn>

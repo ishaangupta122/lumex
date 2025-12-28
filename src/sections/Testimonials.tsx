@@ -7,7 +7,8 @@ import { FaQuoteLeft } from "react-icons/fa";
 import { testimonialsData } from "../lib/data";
 
 export default function Testimonials() {
-  const { heading, subheading, testimonials } = testimonialsData;
+  const { heading, highlightedHeading, subheading, testimonials } =
+    testimonialsData;
   const [globalMousePos, setGlobalMousePos] = useState({ x: 0, y: 0 });
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [intensities, setIntensities] = useState<number[]>([0, 0, 0]);
@@ -17,11 +18,12 @@ export default function Testimonials() {
       {/* Background decoration */}
       <div className="absolute inset-0 bg-linear-to-b from-transparent via-neon-purple/5 to-transparent" />
 
-      <div className="max-w-7xl mx-auto relative">
+      <div className="relative">
         <FadeIn>
           <div className="text-center mb-20 md:mb-28">
             <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              Loved by <span className="gradient-text">designers</span>
+              {heading}{" "}
+              <span className="gradient-text">{highlightedHeading}</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
               {subheading}
@@ -114,7 +116,7 @@ export default function Testimonials() {
                   </div>
 
                   {/* Card with fixed height */}
-                  <div className="relative h-100 p-10 md:p-12 rounded-3xl bg-dark-gray/60 border-2 border-light-gray/50 backdrop-blur-sm transition-all duration-500 flex flex-col overflow-hidden z-0">
+                  <div className="relative h-full p-10 md:p-12 rounded-3xl bg-dark-gray/60 border-2 border-light-gray/50 backdrop-blur-sm transition-all duration-500 flex flex-col overflow-hidden z-0">
                     {/* Hover border effect */}
                     <div
                       className="absolute inset-0 rounded-3xl pointer-events-none transition-opacity duration-300"

@@ -3,13 +3,60 @@
 import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 
+function calculateGrid() {
+  if (typeof window === "undefined") {
+    return { cols: 9, rows: 6, brightness: 1 };
+  }
+
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+
+  let cols: number;
+  let rows: number;
+  let brightness = 1;
+  let rowBias = 1;
+
+  if (h > w) {
+    cols = w < 420 ? 4 : w < 640 ? 5 : 6;
+    rowBias = 1.1;
+    brightness = 0.8;
+  } else {
+    cols = w < 768 ? 6 : w < 1024 ? 7 : w < 1440 ? 8 : 8;
+
+    rowBias =
+      w > 1920 ? 2.45 : w > 1600 ? 2 : w > 1440 ? 1.9 : w > 1200 ? 1.7 : 1.4;
+
+    brightness = w < 768 ? 0.9 : 1;
+  }
+
+  rows = Math.ceil((h / (w / cols)) * rowBias);
+
+  return { cols, rows, brightness };
+}
+
+function useResponsiveGrid() {
+  const [grid, setGrid] = useState(calculateGrid);
+
+  useEffect(() => {
+    const updateGrid = () => {
+      setGrid(calculateGrid());
+    };
+
+    window.addEventListener("resize", updateGrid);
+    return () => window.removeEventListener("resize", updateGrid);
+  }, []);
+
+  return grid;
+}
+
 interface CubeProps {
   row: number;
   col: number;
   layer: "background" | "foreground";
+  brightness: number;
 }
 
-function Cube({ row, col, layer }: CubeProps) {
+function Cube({ row, col, layer, brightness }: CubeProps) {
   const cubeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -18,51 +65,33 @@ function Cube({ row, col, layer }: CubeProps) {
 
     const maxDistance = layer === "foreground" ? 280 : 380;
     const intensityMultiplier = layer === "foreground" ? 1.2 : 0.9;
-    let isInsideHero = false;
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = cube.getBoundingClientRect();
-      const cubeCenterX = rect.left + rect.width / 2;
-      const cubeCenterY = rect.top + rect.height / 2;
-      const deltaX = e.clientX - cubeCenterX;
-      const deltaY = e.clientY - cubeCenterY;
-      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const distance = Math.sqrt(dx * dx + dy * dy);
       const influence = Math.max(0, 1 - distance / maxDistance);
 
-      // Check if mouse is inside hero section
-      const heroSection = cube.closest(".absolute.inset-0.overflow-hidden");
-      if (heroSection) {
-        const heroRect = heroSection.getBoundingClientRect();
-        isInsideHero =
-          e.clientX >= heroRect.left &&
-          e.clientX <= heroRect.right &&
-          e.clientY >= heroRect.top &&
-          e.clientY <= heroRect.bottom;
-      }
-
-      if (isInsideHero && influence > 0) {
-        const targetRotateX =
-          (-deltaY / maxDistance) * 18 * influence * intensityMultiplier;
-        const targetRotateY =
-          (deltaX / maxDistance) * 18 * influence * intensityMultiplier;
-        const targetScale = 1 + influence * 0.06 * intensityMultiplier;
-        const targetOpacity = 0.35 + influence * 0.4;
-
+      if (influence > 0) {
         gsap.to(cube, {
-          rotateX: targetRotateX,
-          rotateY: targetRotateY,
-          scale: targetScale,
-          opacity: targetOpacity,
+          rotateX: (-dy / maxDistance) * 18 * influence * intensityMultiplier,
+          rotateY: (dx / maxDistance) * 18 * influence * intensityMultiplier,
+          scale: 1 + influence * 0.06 * intensityMultiplier,
+          opacity: (0.35 + influence * 0.4) * brightness,
           duration: 0.3,
           ease: "power2.out",
           overwrite: true,
         });
-      } else if (!isInsideHero || influence === 0) {
+      } else {
         gsap.to(cube, {
           rotateX: 0,
           rotateY: 0,
           scale: 1,
-          opacity: 0.35,
+          opacity: 0.35 * brightness,
           duration: 0.3,
           ease: "power2.out",
           overwrite: true,
@@ -71,11 +100,8 @@ function Cube({ row, col, layer }: CubeProps) {
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, [layer]);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [layer, brightness]);
 
   return (
     <div
@@ -84,19 +110,19 @@ function Cube({ row, col, layer }: CubeProps) {
       style={{
         transformStyle: "preserve-3d",
         willChange: "transform",
-        opacity: 0.35,
+        opacity: 0.35 * brightness,
       }}>
       <div className="cube-wireframe relative w-full h-full">
         <div
           className="absolute inset-0 border-2 rounded"
           style={{
             borderColor: `rgba(168, 85, 247, ${
-              layer === "foreground" ? 0.55 : 0.38
+              (layer === "foreground" ? 0.55 : 0.38) * brightness
             })`,
             boxShadow:
               layer === "foreground"
-                ? "0 0 8px rgba(168, 85, 247, 0.28)"
-                : "0 0 5px rgba(168, 85, 247, 0.18)",
+                ? `0 0 8px rgba(168, 85, 247, ${0.28 * brightness})`
+                : `0 0 5px rgba(168, 85, 247, ${0.18 * brightness})`,
           }}
         />
 
@@ -104,7 +130,7 @@ function Cube({ row, col, layer }: CubeProps) {
           className="absolute inset-0 border-2 rounded"
           style={{
             borderColor: `rgba(168, 85, 247, ${
-              layer === "foreground" ? 0.35 : 0.22
+              (layer === "foreground" ? 0.35 : 0.22) * brightness
             })`,
             transform: "translate(3px, 3px)",
           }}
@@ -114,12 +140,12 @@ function Cube({ row, col, layer }: CubeProps) {
           className="absolute top-0 left-0 w-1.5 h-1.5 rounded-full"
           style={{
             backgroundColor: `rgba(196, 255, 97, ${
-              layer === "foreground" ? 0.7 : 0.5
+              (layer === "foreground" ? 0.7 : 0.5) * brightness
             })`,
             boxShadow:
               layer === "foreground"
-                ? "0 0 5px rgba(196, 255, 97, 0.5)"
-                : "0 0 3px rgba(196, 255, 97, 0.3)",
+                ? `0 0 5px rgba(196, 255, 97, ${0.5 * brightness})`
+                : `0 0 3px rgba(196, 255, 97, ${0.3 * brightness})`,
           }}
         />
       </div>
@@ -131,9 +157,10 @@ interface CubeGridLayerProps {
   cols: number;
   rows: number;
   layer: "background" | "foreground";
+  brightness: number;
 }
 
-function CubeGridLayer({ cols, rows, layer }: CubeGridLayerProps) {
+function CubeGridLayer({ cols, rows, layer, brightness }: CubeGridLayerProps) {
   const cubes = Array.from({ length: rows }, (_, row) =>
     Array.from({ length: cols }, (_, col) => ({
       row,
@@ -153,42 +180,54 @@ function CubeGridLayer({ cols, rows, layer }: CubeGridLayerProps) {
           layer === "foreground" ? "translateZ(50px)" : "translateZ(0px)",
         opacity: layer === "foreground" ? 1 : 0.6,
       }}>
-      {" "}
       {cubes.map(({ row, col, key }) => (
-        <Cube key={key} row={row} col={col} layer={layer} />
+        <Cube
+          key={key}
+          row={row}
+          col={col}
+          layer={layer}
+          brightness={brightness}
+        />
       ))}
     </div>
   );
 }
 
 export default function CubeGridBackground() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { cols, rows, brightness } = useResponsiveGrid();
+  const [mounted, setMounted] = useState(false);
 
-  const COLS = 9;
-  const ROWS = 6;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <div
-      ref={containerRef}
       className="absolute inset-0 overflow-hidden"
       style={{
         perspective: "1200px",
         transformStyle: "preserve-3d",
       }}>
-      {/* Background gradient */}
       <div className="absolute inset-0 bg-linear-to-b from-black via-dark-gray to-black" />
 
-      {/* Ambient glow effects */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-purple/5 rounded-full blur-3xl" />
       <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-neon-purple/5 rounded-full blur-3xl" />
 
-      {/* Background Layer (slower, subtler response) */}
-      <CubeGridLayer cols={COLS} rows={ROWS} layer="background" />
+      <CubeGridLayer
+        cols={cols}
+        rows={rows}
+        layer="background"
+        brightness={brightness}
+      />
+      <CubeGridLayer
+        cols={cols}
+        rows={rows}
+        layer="foreground"
+        brightness={brightness}
+      />
 
-      {/* Foreground Layer (stronger, more responsive) */}
-      <CubeGridLayer cols={COLS} rows={ROWS} layer="foreground" />
-
-      {/* Vignette overlay to blend edges */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{

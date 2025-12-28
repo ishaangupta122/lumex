@@ -36,7 +36,7 @@ export default function Navbar() {
         <div
           className="border-b"
           style={{ borderColor: `rgba(255, 255, 255, ${borderOpacity})` }}>
-          <div className="container max-w-7xl mx-auto px-6 py-4">
+          <div className="container max-w-6xl mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               {/* Logo */}
               <Link href="/">
@@ -75,7 +75,7 @@ export default function Navbar() {
                   </span>
                 </motion.div>
               </Link>
-              <div className="hidden md:flex items-center gap-8">
+              <div className="hidden lg:flex items-center gap-8">
                 {navLinks.map((item) => (
                   <Link
                     key={item.label}
@@ -87,7 +87,7 @@ export default function Navbar() {
               </div>
 
               {/* CTA Buttons */}
-              <div className="hidden md:flex items-center gap-4">
+              <div className="hidden lg:flex items-center gap-4">
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   className="px-6 py-2 cursor-pointer bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-black transition-all">
@@ -103,7 +103,7 @@ export default function Navbar() {
               {/* Mobile menu button */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="md:hidden text-white p-2">
+                className="lg:hidden text-white p-2">
                 {isOpen ? <HiX size={24} /> : <HiMenu size={24} />}
               </button>
             </div>

@@ -5,8 +5,8 @@ import { FadeIn } from "../components/animations/AnimationWrappers";
 import { useRef, useState, useEffect } from "react";
 import { featuresData } from "../lib/data";
 
-export default function FeaturesSection() {
-  const { heading, subheading, features } = featuresData;
+export default function Features() {
+  const { heading, highlightedHeading, subheading, features } = featuresData;
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -44,13 +44,13 @@ export default function FeaturesSection() {
         <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-green-500/5 rounded-full blur-3xl" />
       </motion.div>
 
-      <div className="max-w-7xl mx-auto relative">
+      <div className="relative">
         {/* Section header */}
         <FadeIn>
           <div className="text-center mb-20 md:mb-28">
             <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              {heading.split("modern creators")[0]}
-              <span className="gradient-text">modern creators</span>
+              {heading}{" "}
+              <span className="gradient-text">{highlightedHeading}</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
               {subheading}
@@ -97,7 +97,7 @@ export default function FeaturesSection() {
                 />
 
                 {/* Card content */}
-                <div className="relative min-h-87 p-10 md:p-12 rounded-3xl bg-dark-gray backdrop-blur-sm transition-all duration-500 flex flex-col z-0">
+                <div className="relative h-full p-10 md:p-12 rounded-3xl bg-dark-gray backdrop-blur-sm transition-all duration-500 flex flex-col justify-between z-0">
                   {/* Icon */}
                   <motion.div
                     whileHover={{ rotate: 360, scale: 1.1 }}
@@ -107,7 +107,7 @@ export default function FeaturesSection() {
                   </motion.div>
 
                   {/* Content */}
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white group-hover:text-neon-green transition-colors duration-300 mt-auto">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white group-hover:text-neon-green transition-colors duration-300">
                     {feature.title}
                   </h3>
 

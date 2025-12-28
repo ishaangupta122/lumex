@@ -5,7 +5,7 @@ import { FadeIn } from "../components/animations/AnimationWrappers";
 import { useRef, useState } from "react";
 import { companyLogosData } from "../lib/data";
 
-export default function CompanyLogosSection() {
+export default function CompanyLogos() {
   const { companies, config } = companyLogosData;
   const x = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -19,7 +19,6 @@ export default function CompanyLogosSection() {
 
     x.set(x.get() - moveBy);
 
-    // seamless loop reset
     if (x.get() <= -containerRef.current.scrollWidth / 2) {
       x.set(0);
     }
@@ -30,7 +29,7 @@ export default function CompanyLogosSection() {
   return (
     <section className="relative py-20 px-6 overflow-hidden border-y border-light-gray/20">
       <FadeIn>
-        <div className="max-w-7xl mx-auto">
+        <div className="relative">
           <motion.h3
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -54,10 +53,6 @@ export default function CompanyLogosSection() {
                 {duplicatedCompanies.map((company, index) => (
                   <motion.div
                     key={index}
-                    // initial={{ opacity: 0, y: 20 }}
-                    // whileInView={{ opacity: 1, y: 0 }}
-                    // viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.05 }}
                     className="flex items-center gap-3 cursor-pointer text-white/50 hover:text-white transition">
                     <span className="text-5xl">{company.logo}</span>
                     <span className="text-3xl font-bold whitespace-nowrap">

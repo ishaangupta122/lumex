@@ -6,8 +6,14 @@ import { HiCheck } from "react-icons/hi";
 import { ctaData } from "../lib/data";
 
 export default function CTASection() {
-  const { heading, subheading, primaryButton, secondaryButton, features } =
-    ctaData;
+  const {
+    heading,
+    highlightedHeading,
+    subheading,
+    primaryButton,
+    secondaryButton,
+    features,
+  } = ctaData;
 
   return (
     <section className="relative py-32 md:py-40 px-6 bg-black overflow-hidden">
@@ -15,7 +21,7 @@ export default function CTASection() {
       <div className="absolute inset-0 bg-linear-to-b from-neon-purple/5 via-transparent to-neon-green/5" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-neon-green/10 rounded-full blur-3xl" />
 
-      <div className="max-w-5xl mx-auto relative">
+      <div className="relative">
         <FadeIn>
           <div className="text-center">
             <motion.h2
@@ -24,9 +30,9 @@ export default function CTASection() {
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-              {heading.split("revolutionize")[0]}
-              <span className="gradient-text">revolutionize</span>
-              {heading.split("revolutionize")[1]}
+              {heading.split(highlightedHeading)[0]}
+              <span className="gradient-text">{highlightedHeading}</span>
+              {heading.split(highlightedHeading)[1]}
             </motion.h2>
 
             <motion.p

@@ -30,7 +30,8 @@ export interface Feature {
 }
 
 export const featuresData = {
-  heading: "Built for modern creators",
+  heading: "Built for",
+  highlightedHeading: "modern creators",
   subheading: "Everything you need to design, prototype, and collaborate.",
   features: [
     {
@@ -64,7 +65,8 @@ export const showcaseData = {
   badge: {
     text: "★ TRUSTED WORLDWIDE",
   },
-  heading: "Join the creative revolution",
+  heading: "Join the",
+  highlightedHeading: "creative revolution",
   subheading:
     "Thousands of creators worldwide trust us with their design workflow.",
   items: [
@@ -103,7 +105,8 @@ export interface Testimonial {
 }
 
 export const testimonialsData = {
-  heading: "Loved by designers",
+  heading: "Loved by",
+  highlightedHeading: "designers",
   subheading: "See what creative professionals are saying about Lumex",
   testimonials: [
     {
@@ -147,7 +150,8 @@ export interface PricingPlan {
 }
 
 export const pricingData = {
-  heading: "Simple, transparent pricing",
+  heading: "Simple,",
+  highlightedHeading: "transparent pricing",
   subheading: "Choose the perfect plan for your needs",
   plans: [
     {
@@ -199,6 +203,7 @@ export const pricingData = {
 // ==================== CTA ====================
 export const ctaData = {
   heading: "Ready to revolutionize your workflow?",
+  highlightedHeading: "revolutionize",
   subheading:
     "Join thousands of designers who've already made the switch to Lumex.",
   primaryButton: {
@@ -277,5 +282,91 @@ export const navbarData = {
   cta: {
     text: "Get Started",
     href: "#",
+  },
+};
+
+// ==================== HERO ====================
+export const heroData = {
+  badge: {
+    text: "Introducing Lumex",
+  },
+  heading: {
+    main: "Design tools that",
+    highlighted: "don't slow you down",
+  },
+  buttons: {
+    primary: {
+      text: "Get Started Free",
+      href: "#",
+    },
+    secondary: {
+      text: "Watch Demo",
+      href: "#",
+    },
+  },
+  stats: [
+    { value: "10", suffix: "M+", label: "Active Users" },
+    { value: "98", suffix: "%", label: "Uptime" },
+    { value: "5000", suffix: "+", label: "Teams" },
+    { value: "150", suffix: "+", label: "Countries" },
+  ],
+};
+
+// ==================== INTEGRATIONS ====================
+export const integrationsData = {
+  badge: {
+    text: "✦ INTEGRATIONS",
+  },
+  heading: "Plays well with",
+  highlightedHeading: "others",
+  subheading:
+    "Layers seamlessly connects with your favorite tools, making it easy to plug into any workflow.",
+  integrationsLeft: [
+    {
+      name: "Figma",
+      icon: "🎨",
+      description: "Figma is a collaborative interface design tool.",
+    },
+    {
+      name: "Notion",
+      icon: "📝",
+      description: "Notion is an all-in-one workspace for notes and docs.",
+    },
+    {
+      name: "Slack",
+      icon: "💬",
+      description: "Slack is a powerful team communication platform.",
+    },
+    {
+      name: "GitHub",
+      icon: "🐙",
+      description: "GitHub is the leading platform for code collaboration.",
+    },
+  ],
+  integrationsRight: [
+    {
+      name: "Linear",
+      icon: "📊",
+      description: "Linear is the issue tracking tool teams love to use.",
+    },
+    {
+      name: "Dropbox",
+      icon: "📦",
+      description: "Dropbox keeps your files safe and accessible.",
+    },
+    {
+      name: "Zoom",
+      icon: "🎥",
+      description: "Zoom connects teams with video conferencing.",
+    },
+    {
+      name: "Trello",
+      icon: "📋",
+      description: "Trello organizes your projects into boards.",
+    },
+  ],
+  config: {
+    cardHeight: 200,
+    speed: 40, // px per second
   },
 };

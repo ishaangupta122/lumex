@@ -3,7 +3,8 @@
 import { motion, useInView } from "framer-motion";
 import { FadeIn } from "../components/animations/AnimationWrappers";
 import { useRef, useState, useEffect } from "react";
-import CubeGridBackground from "../components/CubeGridBackground";
+import CubeGridBackground from "../components/animations/CubeGridBackground";
+import { heroData } from "../lib/data";
 
 function AnimatedCounter({
   value,
@@ -46,6 +47,8 @@ function AnimatedCounter({
 }
 
 export default function Hero() {
+  const { badge, heading, buttons, stats } = heroData;
+
   return (
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
@@ -54,7 +57,7 @@ export default function Hero() {
       <CubeGridBackground />
 
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center py-40">
+      <div className="relative z-10 px-6 text-center py-40">
         {/* Badge */}
         <FadeIn delay={0.1}>
           <div className="mb-8 inline-block">
@@ -63,17 +66,16 @@ export default function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-green opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-neon-green"></span>
               </span>
-              <span className="text-sm text-neon-green">Introducing Lumex</span>
+              <span className="text-sm text-neon-green">{badge.text}</span>
             </div>
           </div>
         </FadeIn>
 
         {/* Main Heading */}
         <FadeIn delay={0.2}>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-16 leading-tighter">
-            Design tools that
-            <br />
-            <span className="gradient-text">don't slow you down</span>
+          <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold mb-16 md:leading-tighter max-w-4xl">
+            {heading.main}
+            <span className="gradient-text">{heading.highlighted}</span>
           </h1>
         </FadeIn>
 
@@ -83,13 +85,13 @@ export default function Hero() {
             <motion.button
               whileTap={{ scale: 0.98 }}
               className="px-8 py-4 cursor-pointer bg-neon-green text-black font-semibold rounded-full hover:shadow-lg hover:shadow-neon-green/20 transition-all">
-              Get Started Free
+              {buttons.primary.text}
             </motion.button>
 
             <motion.button
               whileTap={{ scale: 0.98 }}
               className="px-8 py-4 cursor-pointer bg-transparent border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-black transition-all">
-              Watch Demo
+              {buttons.secondary.text}
             </motion.button>
           </div>
         </FadeIn>
@@ -97,27 +99,15 @@ export default function Hero() {
         {/* Stats */}
         <FadeIn delay={0.5}>
           <div className="mt-34 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
-            {[
-              { value: "10", suffix: "M+", label: "Active Users" },
-              { value: "99.9", suffix: "%", label: "Uptime" },
-              { value: "5000", suffix: "+", label: "Teams" },
-              { value: "150", suffix: "+", label: "Countries" },
-            ].map((stat, index) => (
+            {stats.map((stat, index) => (
               <div
                 key={index}
                 className="flex flex-col items-center flex-wrap text-center group">
                 <div className="w-fit text-2xl md:text-3xl font-bold text-white group-hover:text-neon-green mb-1 transition-colors duration-300">
-                  {stat.suffix === "%" ? (
-                    <>
-                      {stat.value}
-                      {stat.suffix}
-                    </>
-                  ) : (
-                    <>
-                      <AnimatedCounter value={stat.value} suffix="" />
-                      {stat.suffix}
-                    </>
-                  )}
+                  <>
+                    <AnimatedCounter value={stat.value} suffix="" />
+                    {stat.suffix}
+                  </>
                 </div>
                 <div className="text-sm text-gray-300 group-hover:text-neon-green mb-1 transition-colors duration-300">
                   {stat.label}

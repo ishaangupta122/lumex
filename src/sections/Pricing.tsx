@@ -9,17 +9,17 @@ import { HiCheck } from "react-icons/hi";
 import GlowCard from "../components/animations/GlowCard";
 import { pricingData } from "../lib/data";
 
-export default function PricingSection() {
-  const { heading, subheading, plans } = pricingData;
+export default function Pricing() {
+  const { heading, highlightedHeading, subheading, plans } = pricingData;
 
   return (
     <section className="relative py-32 md:py-40 px-6 bg-black z-20">
-      <div className="max-w-7xl mx-auto relative z-20">
+      <div className="relative z-20">
         <FadeIn>
           <div className="text-center mb-20 md:mb-28">
             <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-              {heading.split("transparent pricing")[0]}
-              <span className="gradient-text">transparent pricing</span>
+              {heading}{" "}
+              <span className="gradient-text">{highlightedHeading}</span>
             </h2>
             <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
               {subheading}
