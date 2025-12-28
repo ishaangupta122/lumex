@@ -23,7 +23,7 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section className="relative py-32 md:py-40">
+    <section className="relative py-32 md:py-40 overflow-x-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-linear-to-b via-10% from-transparent via-neon-purple/10 to-transparent md:via-15% md:from-neon-purple/5 md:via-neon-purple/10 md:to-transparent" />
 

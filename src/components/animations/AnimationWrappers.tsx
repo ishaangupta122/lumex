@@ -128,10 +128,10 @@ export function SlideIn({
   className = "",
 }: FadeInProps) {
   const directions = {
-    up: { y: 100 },
-    down: { y: -100 },
-    left: { x: -100 },
-    right: { x: 100 },
+    up: { y: 60 },
+    down: { y: -60 },
+    left: { x: -60 },
+    right: { x: 60 },
     none: {},
   };
 
