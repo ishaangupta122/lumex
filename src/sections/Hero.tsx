@@ -74,7 +74,7 @@ export default function Hero() {
         {/* Main Heading */}
         <FadeIn delay={0.2}>
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold mb-16 md:leading-tighter max-w-4xl">
-            {heading.main}
+            {heading.main}{" "}
             <span className="gradient-text">{heading.highlighted}</span>
           </h1>
         </FadeIn>
