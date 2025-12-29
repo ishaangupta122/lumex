@@ -51,7 +51,7 @@ export default function CTASection() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
+              className="flex flex-col mx-auto w-fit sm:flex-row gap-6 justify-center mb-12">
               <motion.a
                 whileTap={{ scale: 0.95 }}
                 className="px-8 py-4 cursor-pointer bg-neon-green text-black font-semibold rounded-full hover:shadow-lg hover:shadow-neon-green/20 transition-all text-lg">
