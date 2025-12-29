@@ -58,8 +58,8 @@ export default function Hero() {
       <div className="relative z-10 text-center">
         {/* Badge */}
         <FadeIn delay={0.1}>
-          <div className="mb-8 inline-block">
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-medium-gray/50 border border-neon-green backdrop-blur-sm">
+          <div className="mb-8 inline-block mt-10 md:mt-0">
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-x-neon-green/60 border-y-neon-green/80 bg-neon-green/10 backdrop-blur-sm">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-green opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-neon-green"></span>
@@ -71,7 +71,7 @@ export default function Hero() {
 
         {/* Main Heading */}
         <FadeIn delay={0.2}>
-          <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold mb-16 md:leading-tighter max-w-4xl">
+          <h1 className="text-6xl md:text-7xl font-extrabold mb-16 tracking-tighter leading-tighter md:max-w-xl lg:max-w-3xl xl:max-w-3xl mx-auto">
             {heading.main}{" "}
             <span className="gradient-text">{heading.highlighted}</span>
           </h1>
@@ -79,7 +79,7 @@ export default function Hero() {
 
         {/* CTA Buttons */}
         <FadeIn delay={0.4}>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-10 justify-center items-center">
             <motion.button
               whileTap={{ scale: 0.98 }}
               className="px-8 py-4 cursor-pointer bg-neon-green text-black font-semibold rounded-full hover:shadow-lg hover:shadow-neon-green/20 transition-all">

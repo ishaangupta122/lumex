@@ -26,7 +26,7 @@ export default function Footer() {
       <div className="relative py-5">
         {/* Top section */}
 
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6 md:px-10">
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 mb-5 py-4">
             {/* Brand section */}
             <div className="col-span-2 md:col-span-4 lg:col-span-2">
@@ -40,7 +40,7 @@ export default function Footer() {
                     className="flex items-center gap-3 mb-6 group w-fit cursor-pointer"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}>
-                    <div className="relative w-12 h-12 bg-linear-to-br from-purple-500 via-pink-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/40 transition-shadow">
+                    <div className="relative w-11 h-11 bg-linear-to-br from-purple-500 via-pink-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/20 group-hover:shadow-purple-500/40 transition-shadow">
                       <div className="absolute inset-0 bg-linear-to-br from-purple-500 via-pink-500 to-orange-500 rounded-2xl blur opacity-40"></div>
                       <span
                         className="relative text-white font-black text-2xl tracking-tighter"
@@ -49,21 +49,21 @@ export default function Footer() {
                       </span>
                     </div>
                     <span
-                      className="text-2xl font-black tracking-tight bg-linear-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent group-hover:from-purple-300 group-hover:via-pink-300 group-hover:to-orange-300 transition-all"
+                      className="text-2xl font-black tracking-tight bg-linear-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent group-hover:from-purple-300 group-hover:via-pink-300 group-hover:to-orange-300 transition-all uppercase"
                       style={{ fontFamily: "Space Grotesk, sans-serif" }}>
-                      LUMEX
+                      {brand.name}
                     </span>
                   </motion.div>
                 </Link>
 
-                <p className="text-gray-400 mb-6 max-w-sm">{brand.tagline}</p>
+                <p className="text-[#858585] mb-6 max-w-sm">{brand.tagline}</p>
 
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-gray-400">
+                  <div className="flex items-center gap-3 text-[#858585]">
                     <HiMail className="w-5 h-5 text-neon-green" />
-                    <span>hello@lumex.com</span>
+                    <span>hello@fluxion.com</span>
                   </div>
-                  <div className="flex items-center gap-3 text-gray-400">
+                  <div className="flex items-center gap-3 text-[#858585]">
                     <HiLocationMarker className="w-5 h-5 text-neon-green" />
                     <span>San Francisco, CA</span>
                   </div>
@@ -88,7 +88,7 @@ export default function Footer() {
                       <li key={link.label}>
                         <motion.a
                           href={link.href}
-                          className="text-gray-400 hover:text-neon-green transition-colors duration-300"
+                          className="text-[#858585] hover:text-neon-green transition-colors duration-300"
                           whileHover={{ x: 5 }}
                           transition={{ duration: 0.2 }}>
                           {link.label}
@@ -112,7 +112,7 @@ export default function Footer() {
               <h3 className="text-3xl font-bold mb-4">
                 Stay in the <span className="linear-text">loop</span>
               </h3>
-              <p className="text-gray-400 mb-6">
+              <p className="text-[#858585] mb-6">
                 Get the latest updates, tips, and exclusive offers delivered to
                 your inbox.
               </p>
@@ -120,7 +120,7 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 px-6 py-3 bg-medium-gray border border-light-gray rounded-full text-white placeholder-gray-500 focus:outline-none focus:placeholder:text-neon-green focus:border-neon-green transition-colors"
+                  className="flex-1 px-6 py-3 bg-medium-gray border border-light-gray rounded-full text-white placeholder-[#858585] focus:outline-none focus:placeholder:text-neon-green focus:border-neon-green transition-colors"
                 />
                 <motion.a
                   whileTap={{ scale: 0.95 }}
@@ -138,9 +138,9 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="pt-5 px-6 border-t border-light-gray w-full">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-gray-400 text-sm">{copyright}</p>
+          className="pt-5 border-t border-light-gray w-full">
+          <div className="max-w-6xl mx-auto px-6 md:px-10 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p className="text-[#858585] text-sm">{copyright}</p>
 
             {/* Social links */}
             <div className="flex items-center gap-4">
@@ -151,7 +151,7 @@ export default function Footer() {
                     key={item.name}
                     href={item.href}
                     aria-label={item.name}
-                    className="w-10 h-10 rounded-full bg-medium-gray border border-light-gray flex items-center justify-center text-gray-400 hover:text-neon-green hover:border-neon-green transition-all duration-300"
+                    className="w-10 h-10 rounded-full bg-medium-gray border border-light-gray flex items-center justify-center text-[#858585] hover:text-neon-green hover:border-neon-green transition-all duration-300"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.9 }}>
                     <Icon className="w-5 h-5" />
@@ -160,7 +160,7 @@ export default function Footer() {
               })}
             </div>
 
-            <div className="flex items-center gap-6 text-sm text-gray-400">
+            <div className="flex items-center gap-6 text-sm text-[#858585]">
               <Link
                 href="#"
                 className="hover:text-neon-green transition-colors">

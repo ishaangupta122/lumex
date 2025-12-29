@@ -36,7 +36,7 @@ export default function Navbar() {
         <div
           className="border-b"
           style={{ borderColor: `rgba(255, 255, 255, ${borderOpacity})` }}>
-          <div className="container max-w-6xl mx-auto px-6 py-4">
+          <div className="container max-w-6xl mx-auto px-6 md:px-10 py-4">
             <div className="flex items-center justify-between">
               {/* Logo */}
               <Link href="/">
@@ -69,9 +69,9 @@ export default function Navbar() {
                     </span>
                   </motion.div>
                   <span
-                    className="text-2xl font-black tracking-tight bg-linear-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent group-hover:from-purple-300 group-hover:via-pink-300 group-hover:to-orange-300 transition-all"
+                    className="text-2xl font-black tracking-tight bg-linear-to-r from-purple-400 via-pink-400 to-orange-400 bg-clip-text text-transparent group-hover:from-purple-300 group-hover:via-pink-300 group-hover:to-orange-300 transition-all uppercase"
                     style={{ fontFamily: "Space Grotesk, sans-serif" }}>
-                    LUMEX
+                    {brand}
                   </span>
                 </motion.div>
               </Link>

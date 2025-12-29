@@ -16,8 +16,8 @@ export default function CTASection() {
   } = ctaData;
 
   return (
-    <section className="relative py-32 md:py-40 bg-black overflow-hidden">
-      <div className="relative max-w-6xl mx-auto px-6">
+    <section className="relative py-28 bg-black overflow-hidden">
+      <div className="relative max-w-6xl mx-auto px-6 md:px-10">
         <motion.div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl" />
@@ -29,9 +29,10 @@ export default function CTASection() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+              className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
               {heading.split(highlightedHeading)[0]}
               <span className="gradient-text">{highlightedHeading}</span>
+              <br />
               {heading.split(highlightedHeading)[1]}
             </motion.h2>
 
@@ -40,7 +41,7 @@ export default function CTASection() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl md:text-2xl text-gray-400 mb-12 leading-relaxed">
+              className="max-w-md mx-auto text-base md:text-lg text-[#858585] mb-20 leading-relaxed">
               {subheading}
             </motion.p>
 
@@ -70,7 +71,7 @@ export default function CTASection() {
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-wrap justify-center gap-8 text-gray-400">
+              className="flex flex-wrap justify-center gap-8 text-[#858585]">
               {features.map((feature, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <HiCheck className="w-5 h-5 text-neon-green" />

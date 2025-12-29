@@ -21,7 +21,7 @@ export default function Integrations() {
   );
 
   const CARD_HEIGHT = 200;
-  const SPEED = 40;
+  const SPEED = 60;
 
   const yLeft = useMotionValue(0);
   const yRight = useMotionValue(-(integrationsRight.length * CARD_HEIGHT));
@@ -105,18 +105,22 @@ export default function Integrations() {
 
         {/* Card (unchanged styling) */}
         <div
-          className={`relative p-6 flex items-center justify-between flex-col text-center rounded-2xl border-2 transition-all duration-500 cursor-pointer ${
+          className={`relative p-4 flex items-center justify-between flex-col text-center rounded-2xl border-2 transition-all duration-500 cursor-pointer ${
             isActive
               ? "bg-dark-gray border-transparent shadow-lg"
-              : "bg-dark-gray/60 border-light-gray/50"
+              : "bg-dark-gray/90 border-light-gray/50"
           }`}>
-          <div className="w-24 h-24 rounded-xl bg-white flex items-center justify-center text-3xl shadow mb-3">
-            {integration.icon}
+          <div className="h-28 w-28 rounded-3xl bg-white flex items-center justify-center p-5 shadow mb-3">
+            <img
+              src={integration.logo}
+              alt={`${integration.name} logo`}
+              className="w-full h-full object-contain"
+            />
           </div>
-          <h3 className="text-2xl font-bold text-white mb-2">
+          <h3 className="text-2xl font-semibold text-white mb-2">
             {integration.name}
           </h3>
-          <p className="text-sm text-gray-400 line-clamp-2">
+          <p className="text-sm text-[#858585] line-clamp-2">
             {integration.description}
           </p>
         </div>
@@ -125,23 +129,23 @@ export default function Integrations() {
   };
 
   return (
-    <section className="relative py-32 md:py-40 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20 items-center">
+    <section className="relative py-28 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 md:px-10">
+        <div className="flex flex-col lg:flex-row gap-20 items-center">
           {/* LEFT CONTENT */}
-          <FadeIn>
-            <div className="lg:sticky lg:top-32">
-              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-neon-green/30 bg-neon-green/5 mb-14 w-fit">
-                <span className="text-xs font-mono text-neon-green tracking-wider">
+          <FadeIn className="flex-1 w-full">
+            <div className="text-center lg:text-left lg:sticky lg:top-32 flex flex-col items-center lg:items-start gap-2">
+              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-x-neon-green/60 border-y-neon-green/80 bg-neon-green/10 mb-14 w-fit">
+                <span className="text-xs md:text-sm font-mono font-medium text-neon-green tracking-wider">
                   {badge.text}
                 </span>
               </div>
               <div>
-                <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tighter">
+                <h2 className="text-5xl md:text-6xl font-bold mb-7 leading-tight">
                   {heading}{" "}
                   <span className="gradient-text">{highlightedHeading}</span>
                 </h2>
-                <p className="text-xl md:text-2xl text-gray-400 leading-relaxed">
+                <p className="px-6 md:max-w-xl lg:max-w-none lg:px-0 mx-auto text-base md:text-lg text-[#858585] leading-relaxed">
                   {subheading}
                 </p>
               </div>
@@ -149,15 +153,15 @@ export default function Integrations() {
           </FadeIn>
 
           {/* RIGHT MARQUEE */}
-          <div className="relative h-150 overflow-hidden max-w-md ml-auto">
-            <div className="grid grid-cols-2 gap-4 h-full">
-              <motion.div className="space-y-4" style={{ y: yLeft }}>
+          <div className="relative h-130 w-full overflow-hidden max-w-md shrink-0">
+            <div className="grid grid-cols-2 gap-2 h-full">
+              <motion.div className="space-y-2" style={{ y: yLeft }}>
                 {duplicatedLeft.map((i, idx) =>
                   renderCard(i, idx, "left", integrationsLeft.length)
                 )}
               </motion.div>
 
-              <motion.div className="space-y-4" style={{ y: yRight }}>
+              <motion.div className="space-y-2" style={{ y: yRight }}>
                 {duplicatedRight.map((i, idx) =>
                   renderCard(i, idx, "right", integrationsRight.length)
                 )}

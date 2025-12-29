@@ -27,16 +27,16 @@ export default function CompanyLogos() {
   const duplicatedCompanies = [...companies, ...companies];
 
   return (
-    <section className="relative py-32 md:py-40 overflow-hidden border-y border-light-gray/20">
+    <section className="relative pb-28 pt-10 overflow-hidden">
       <FadeIn>
-        <div className="relative max-w-6xl mx-auto px-6">
-          {/* <motion.h3
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center text-xl md:text-2xl text-gray-400 mb-16">
-            {config.heading}
-          </motion.h3> */}
+        <div className="relative max-w-6xl mx-auto px-6 md:px-10">
+          {/* Heading */}
+          <div className="text-center mb-14">
+            <h2 className="text-3xl font-bold leading-tight text-[#b6b5b5]">
+              {config.heading}{" "}
+              <span className="gradient-text">{config.highlightedHeading}</span>
+            </h2>
+          </div>
 
           <div className="relative">
             {/* Gradients */}
@@ -47,19 +47,26 @@ export default function CompanyLogos() {
               <motion.div
                 ref={containerRef}
                 style={{ x }}
-                className="flex gap-24 w-max"
+                className="flex gap-20 md:gap-28 w-max items-center"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                onTouchStart={() => setIsHovered(true)}
-                onTouchEnd={() => setIsHovered(false)}>
+                onTouchStart={() => setIsHovered(true)}>
                 {duplicatedCompanies.map((company, index) => (
                   <motion.div
                     key={index}
-                    className="flex items-center gap-3 cursor-pointer text-white/50 hover:text-white transition">
-                    <span className="text-5xl">{company.logo}</span>
-                    <span className="text-3xl font-bold whitespace-nowrap">
-                      {company.name}
-                    </span>
+                    className="group cursor-pointer flex items-center gap-2">
+                    <img
+                      src={company.logo}
+                      alt={`${company.name} logo`}
+                      className={`${
+                        company.smaller ? "h-7" : "h-11"
+                      } w-auto object-contain brightness-0 invert opacity-50 group-hover:brightness-100 group-hover:invert-0 group-hover:opacity-100 group-active:brightness-100 group-active:invert-0 group-active:opacity-100 transition-all duration-300`}
+                    />
+                    {company.showName && (
+                      <span className="text-xl font-semibold whitespace-nowrap text-white/50 group-hover:text-white group-active:text-white transition-colors duration-300">
+                        {company.name}
+                      </span>
+                    )}
                   </motion.div>
                 ))}
               </motion.div>

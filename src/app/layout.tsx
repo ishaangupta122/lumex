@@ -20,9 +20,12 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Lumex - Motion-First Design Experience",
+  title: "Fluxion - The Future of Creative Collaboration",
   description:
-    "A premium, modern landing website with smooth animations and neon accents.",
+    "Design tools that don't slow you down. Fluxion is the future of creative collaboration with real-time features, intuitive interface, and lightning-fast performance.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

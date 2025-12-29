@@ -40,9 +40,9 @@ export default function Features() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-32 md:py-40 bg-black overflow-hidden">
+      className="relative py-28 bg-black overflow-hidden">
       {/* Animated background elements */}
-      <div className="relative max-w-6xl mx-auto px-6">
+      <div className="relative max-w-6xl mx-auto px-6 md:px-10">
         <motion.div
           animate={{
             opacity: isVisible ? 1 : 0,
@@ -56,19 +56,19 @@ export default function Features() {
         <div className="">
           {/* Section header */}
           <FadeIn>
-            <div className="text-center mb-20 md:mb-28">
-              <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            <div className="text-center mb-20">
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
                 {heading}{" "}
                 <span className="gradient-text">{highlightedHeading}</span>
               </h2>
-              <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-base md:text-lg text-[#858585] max-w-md mx-auto leading-relaxed">
                 {subheading}
               </p>
             </div>
           </FadeIn>
 
           {/* Features grid with staggered animation */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10">
             {features.map((feature, index) => (
               <FadeIn key={index} delay={0} direction="up">
                 <motion.div
@@ -80,7 +80,7 @@ export default function Features() {
                     delay: index * 0.15,
                     ease: "easeOut",
                   }}
-                  className="group relative h-full"
+                  className="group relative h-full max-w-md mx-auto"
                   onMouseMove={(e) => {
                     if (!isHoverDevice) return;
                     const rect = e.currentTarget.getBoundingClientRect();
@@ -124,7 +124,7 @@ export default function Features() {
                       {feature.title}
                     </h3>
 
-                    <p className="text-gray-400 leading-relaxed text-lg">
+                    <p className="text-[#858585] leading-relaxed text-lg">
                       {feature.description}
                     </p>
 

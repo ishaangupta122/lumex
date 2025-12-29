@@ -63,31 +63,31 @@ export default function Showcase() {
   }, []);
 
   return (
-    <section className="relative py-32 md:py-40">
-      <div className="relative max-w-6xl mx-auto px-6">
+    <section className="relative py-28">
+      <div className="relative max-w-6xl mx-auto px-6 md:px-10">
         <FadeIn>
-          <div className="text-center mb-20 md:mb-28">
-            <motion.div
+          <div className="text-center mb-20">
+            {/* <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-neon-green/30 bg-neon-green/10 mb-8">
-              <span className="text-xs md:text-sm font-mono text-neon-green tracking-wider">
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-x-neon-green/60 border-y-neon-green/80 bg-neon-green/10 mb-8">
+              <span className="text-xs md:text-sm font-mono font-medium text-neon-green tracking-wider">
                 {badge.text}
               </span>
-            </motion.div>
-            <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            </motion.div> */}
+            <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
               {heading}{" "}
               <span className="gradient-text">{highlightedHeading}</span>
             </h2>
-            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-[#858585] max-w-md mx-auto leading-relaxed">
               {subheading}
             </p>
           </div>
         </FadeIn>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {showcaseItems.map((item, index) => (
             <FadeIn key={index} delay={index * 0.2}>
               <motion.div
@@ -95,7 +95,7 @@ export default function Showcase() {
                 whileInView={{ opacity: 1, rotateX: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative perspective-1000 h-full"
+                className="group relative perspective-1000 h-full max-w-md mx-auto"
                 onMouseMove={(e) => {
                   if (!isHoverDevice) return;
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -140,14 +140,18 @@ export default function Showcase() {
                   {/* Value with animated counter */}
                   <div
                     className={`text-6xl md:text-5xl font-extrabold mb-4 bg-linear-to-br ${item.gradient} bg-clip-text text-transparent`}>
-                    {item.value.includes("%") ? (
-                      <>{item.value}</>
-                    ) : (
+                    {
                       <AnimatedCounter
                         value={item.value}
-                        suffix={item.value.includes("+") ? "+" : ""}
+                        suffix={
+                          item.value.includes("+")
+                            ? "+"
+                            : item.value.includes("%")
+                            ? "%"
+                            : ""
+                        }
                       />
-                    )}
+                    }
                   </div>
 
                   {/* Label */}
@@ -156,7 +160,7 @@ export default function Showcase() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-gray-400 text-sm md:text-base">
+                  <p className="text-[#858585] text-sm md:text-base">
                     {item.description}
                   </p>
 

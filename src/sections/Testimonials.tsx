@@ -23,25 +23,25 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section className="relative py-32 md:py-40 overflow-x-hidden">
+    <section className="relative py-28 overflow-x-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-linear-to-b via-10% from-transparent via-neon-purple/10 to-transparent md:via-15% md:from-neon-purple/5 md:via-neon-purple/10 md:to-transparent" />
 
-      <div className="relative max-w-6xl mx-auto px-6">
+      <div className="relative max-w-6xl mx-auto px-6 md:px-10">
         <FadeIn>
-          <div className="text-center mb-20 md:mb-28">
-            <h2 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
               {heading}{" "}
               <span className="gradient-text">{highlightedHeading}</span>
             </h2>
-            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-[#858585] max-w-md mx-auto leading-relaxed">
               {subheading}
             </p>
           </div>
         </FadeIn>
 
         <div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10"
           onMouseMove={(e) => {
             if (!isHoverDevice) return;
             if (animationFrameRef.current !== null) return;
@@ -100,7 +100,7 @@ export default function Testimonials() {
                   ref={(el) => {
                     cardRefs.current[index] = el;
                   }}
-                  className="group relative h-full"
+                  className="group relative h-full max-w-md mx-auto"
                   style={{
                     rotateX: springRotateX,
                     rotateY: springRotateY,
@@ -175,7 +175,7 @@ export default function Testimonials() {
                         <div className="font-semibold text-white text-lg">
                           {testimonial.name}
                         </div>
-                        <div className="text-sm text-gray-400">
+                        <div className="text-sm text-[#858585]">
                           {testimonial.role} at {testimonial.company}
                         </div>
                       </div>
